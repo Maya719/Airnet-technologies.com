@@ -479,74 +479,88 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div id="" class="col-md-8 mx-auto paymet-box"></div>
-                                    <p>
-                                    <h3 class="text-center">Payment Options </h3>
-                                    <p class="text-center"> Select your payment options</p>
-                                    </p>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="payment-method">
-                                            <div class="payment_cont">
-                                                <div>
-                                                    @if (get_stripe_public_key() && get_stripe_secret_key())
-                                                        <input type="radio" id="option1" name="options"
-                                                            value="stripe" class="radio-input" checked>
-                                                        <label for="option1" class="payment_opt">
-                                                            <img src="{{ asset('assets/img/stripe.png') }}"
-                                                                alt="Stripe">
-                                                        </label>
-                                                    @endif
-                                                </div>
-                                                <div>
-                                                    @if (get_fatoorah_secret_key())
-                                                        <input type="radio" id="option2" name="options"
-                                                            value="fatoorah" class="radio-input">
-                                                        <label for="option2" class="payment_opt mt-3">
-                                                            <img src="{{ asset('assets/img/fatoorah.png') }}"
-                                                                class="fatoorah_img" alt="Fatoorah">
-                                                        </label>
-                                                    @endif
-                                                </div>
+                                    @if ($project['price'] > 0)
+                                        <p>
+                                        <h3 class="text-center">Payment Options </h3>
+                                        <p class="text-center"> Select your payment options</p>
+                                        </p>
+                                    @endif
+                                    @if ($project['price'] > 0)
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="payment-method">
 
-                                                <div class="col-lg-12 mt-3 fatoorah-field" style="display: none;">
-                                                    <label for="cname">Name</label>
-                                                    <input type="text" class="form-control" id="cname"
-                                                        name="cname">
+                                                <div class="payment_cont">
+                                                    <div>
+                                                        @if (get_stripe_public_key() && get_stripe_secret_key())
+                                                            <input type="radio" id="option1" name="options"
+                                                                value="stripe" class="radio-input" checked>
+                                                            <label for="option1" class="payment_opt">
+                                                                <img src="{{ asset('assets/img/stripe.png') }}"
+                                                                    alt="Stripe">
+                                                            </label>
+                                                        @endif
+                                                    </div>
+                                                    <div>
+                                                        @if (get_fatoorah_secret_key())
+                                                            <input type="radio" id="option2" name="options"
+                                                                value="fatoorah" class="radio-input">
+                                                            <label for="option2" class="payment_opt mt-3">
+                                                                <img src="{{ asset('assets/img/fatoorah.png') }}"
+                                                                    class="fatoorah_img" alt="Fatoorah">
+                                                            </label>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="col-lg-12 mt-3 fatoorah-field" style="display: none;">
+                                                        <label for="cname">Name</label>
+                                                        <input type="text" class="form-control" id="cname"
+                                                            name="cname">
+                                                    </div>
+                                                    <div class="col-lg-4 mt-3 fatoorah-field" style="display: none;">
+                                                        <label for="countryCode">Country</label>
+                                                        <select class="form-select mdb-select" name="countryCode"
+                                                            id="countryCode" required>
+                                                            <option value="" selected>Select a Country
+                                                            </option>
+                                                            <option value="+965">+965 - Kuwait</option>
+                                                            <option value="+966">+966 - Saudi Arabia</option>
+                                                            <option value="+973">+973 - Bahrain</option>
+                                                            <option value="+971">+971 - United Arab Emirates
+                                                            </option>
+                                                            <option value="+974">+974 - Qatar</option>
+                                                            <option value="+968">+968 - Oman</option>
+                                                            <option value="+962">+962 - Jordan</option>
+                                                            <option value="+20">+20 - Egypt</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-8 mt-3 fatoorah-field" style="display: none;">
+                                                        <label for="phone">Phone</label>
+                                                        <input type="text" class="form-control" id="phone"
+                                                            name="phone">
+                                                    </div>
+                                                    <div class="col-lg-12 mt-3 fatoorah-field" style="display: none;">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control" id="email"
+                                                            name="email">
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4 mt-3 fatoorah-field" style="display: none;">
-                                                    <label for="countryCode">Country</label>
-                                                    <select class="form-select mdb-select" name="countryCode"
-                                                        id="countryCode" required>
-                                                        <option value="" selected>Select a Country
-                                                        </option>
-                                                        <option value="+965">+965 - Kuwait</option>
-                                                        <option value="+966">+966 - Saudi Arabia</option>
-                                                        <option value="+973">+973 - Bahrain</option>
-                                                        <option value="+971">+971 - United Arab Emirates
-                                                        </option>
-                                                        <option value="+974">+974 - Qatar</option>
-                                                        <option value="+968">+968 - Oman</option>
-                                                        <option value="+962">+962 - Jordan</option>
-                                                        <option value="+20">+20 - Egypt</option>
-                                                    </select>
+                                                <div class="order-button-payment mt-4">
+                                                    <button type="button" id="payment-button"
+                                                        class="tp-btn tp-color-btn w-100 banner-animation">Buy it
+                                                        now</button>
                                                 </div>
-                                                <div class="col-lg-8 mt-3 fatoorah-field" style="display: none;">
-                                                    <label for="phone">Phone</label>
-                                                    <input type="text" class="form-control" id="phone"
-                                                        name="phone">
-                                                </div>
-                                                <div class="col-lg-12 mt-3 fatoorah-field" style="display: none;">
-                                                    <label for="email">Email</label>
-                                                    <input type="email" class="form-control" id="email"
-                                                        name="email">
-                                                </div>
-                                            </div>
-                                            <div class="order-button-payment mt-4">
-                                                <button type="button" id="payment-button"
-                                                    class="tp-btn tp-color-btn w-100 banner-animation">Buy it
-                                                    now</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="payment-method">
+                                                <div class="order-button-payment mt-4">
+                                                    <a href="{{ $project["link"] }}" id="payment-button"
+                                                        class="tp-btn tp-color-btn w-100 banner-animation">Visit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </form>

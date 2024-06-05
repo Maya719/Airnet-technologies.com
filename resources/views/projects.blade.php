@@ -471,7 +471,7 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body pb-3">
-                                        <label>Title</label>
+                                        <label>Title <span class="text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <input name="title" type="text" class="form-control" aria-label="title"
                                                 aria-describedby="title-addon">
@@ -487,7 +487,7 @@
                                             <input type="number" min="0" class="form-control" name="price"
                                                 placeholder="$">
                                         </div>
-                                        <label>Project Category</label>
+                                        <label>Project Category <span class="text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <select class="form-select" name="category" aria-label="category"
                                                 aria-describedby="email-addon">
@@ -495,11 +495,11 @@
                                                 <option value="Web">Web Development</option>
                                                 <option value="Ai">Artificial intelligence</option>
                                                 <option value="App">Application Development</option>
-                                                <option value="plan">Plan Saling</option>
+                                                <option value="plan">Plan Service</option>
                                             </select>
                                         </div>
                                         <input type="hidden" name="categoryInput">
-                                        <label>Thumbnail/Image</label>
+                                        <label>Thumbnail/Image <span class="text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <div class="fallback">
                                                 <div class="custom-file">
@@ -508,7 +508,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <label>Description</label>
+                                        <label>Description <span class="text-danger">*</span></label>
                                         <textarea class="form-control" id="description_add" name="description"></textarea>
                                     </div>
                                     <div class="card-footer text-center pt-0 px-sm-4 px-1">
@@ -527,7 +527,7 @@
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="font-weight-bolder text-primary text-gradient">Edit Project</h4>
@@ -541,7 +541,7 @@
                                 <div class="card-body pb-3">
                                     <input name="update_id" type="hidden" class="form-control" id="update_id"
                                         aria-label="update_id" aria-describedby="update_id-addon">
-                                    <label>Title</label>
+                                    <label>Title <span class="text-danger">*</span></label>
                                     <div class="input-group mb-3">
                                         <input name="title" type="text" class="form-control" id="title"
                                             aria-label="title" aria-describedby="title-addon">
@@ -559,19 +559,20 @@
                                         <input type="number" min="0" id="price" class="form-control"
                                             name="price" placeholder="$">
                                     </div>
-                                    <label>Project Category</label>
+                                    <label>Project Category <span class="text-danger">*</span></label>
                                     <div class="input-group mb-3">
                                         <select class="form-select" id="categorySelect" name="category"
                                             aria-label="category" aria-describedby="email-addon">
                                             <option value="" selected disabled>Select an option</option>
-                                            <option value="Web">Web</option>
-                                            <option value="Ai">Ai</option>
-                                            <option value="App">App</option>
+                                            <option value="Web">Web Development</option>
+                                            <option value="Ai">Artificial intelligence</option>
+                                            <option value="App">Application Development</option>
+                                            <option value="plan">Plan Service</option>
                                         </select>
                                     </div>
 
                                     <input type="hidden" id="categoryInput" name="categoryInput">
-                                    <label>Thumbnail/Image</label>
+                                    <label>Thumbnail/Image <span class="text-danger">*</span></label>
                                     <div class="input-group mb-3">
                                         <div class="fallback">
                                             <div class="custom-file">
@@ -580,7 +581,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label>Description</label>.
+                                    <label>Description <span class="text-danger">*</span></label>
                                     <textarea name="description" id="description"></textarea>
                                 </div>
                                 <div class="card-footer text-end pt-0 px-sm-4 px-1">
