@@ -61,11 +61,13 @@ Route::post('/myfatoorah/callback', [MyFatoorahController::class, 'callback'])->
 
 
 
-Route::get('/home', [Main_Controller::class, 'index'])->name('home');
+Route::get('/', [Main_Controller::class, 'index'])->name('home');
 
 Route::get('/home-about', [Main_Controller::class, 'index'])->name('about');
 
 Route::get('/home-services', [Main_Controller::class, 'index'])->name('services');
+
+Route::get('/home-technologies', [Main_Controller::class, 'index'])->name('technologies');
 
 
 Route::get('/home-portfolio', [Main_Controller::class, 'index'])->name('portfolio');

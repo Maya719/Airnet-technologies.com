@@ -307,16 +307,14 @@
             </div>
         </section>
         <!-- End Counts Section -->
-  
-  
           <!-- ======= Portfolio Section ======= -->
                 <section id="portfolio" class="portfolio">
             <div class="container">
 
                 <div class="section-title">
-                    <span>Services</span>
+                    <span>offering</span>
                     <h2>Services</h2>
-                    <p>Check our latest products</p>
+                    <p>Check our services</p>
                 </div>
 
                @include('portfolio', ['all_projects' => $all_projects])
@@ -331,17 +329,15 @@
                 </div>
         </section>
         <!-- End Portfolio Section -->
-  
-
         <!-- ======= Services Section ======= -->
         <section id="services" class="values">
 
             <div class="container" data-aos="fade-up">
 
                 <div class="section-title">
-                    <span>Services</span>
-                    <h2>Technologies</h2>
-                    <p>Services Provided with Expertise</p>
+                    <span>Domain</span>
+                    <h2>Our Domain</h2>
+                    <p>Our domain of interest</p>
                 </div>
 
 

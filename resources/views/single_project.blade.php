@@ -260,42 +260,6 @@
     <link href="{{ asset('assets/css/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('assets/js/jquery.toast.min.js') }}"></script>
     <style>
-        /* .radio-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .radio-input {
-            display: none;
-        }
-
-        .radio-label {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, border-color 0.3s;
-            font-size: 16px;
-        }
-
-        .radio-label svg {
-            margin-right: 10px;
-        }
-
-        .radio-input:checked+.radio-label {
-            background-color: #007BFF;
-            border-color: #007BFF;
-            color: #fff;
-        }
-
-        .radio-label:hover {
-            background-color: #f0f0f0;
-            border-color: #007BFF;
-        } */
-
         .radio-input {
             display: none;
         }
@@ -429,7 +393,35 @@
                 width: auto;
                 height: 7vh;
             }
+        }
+        .price_cont {
 
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            font-size: 16px;
+            color: #333;
+
+            margin: 1.6rem 0;
+
+        }
+
+        .price_cont p {
+            margin: 0;
+        }
+
+        .price_cont p:first-child {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .price_cont p:last-child {
+            font-weight: bold;
+            font-size: 1.3rem;
+            background: linear-gradient(to right, #007bff, #093768);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
@@ -465,18 +457,30 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="card mb-3">
-                            <div class="card-body">
+                        <div class="card my-3">
+                            <div class="card-body ">
                                 <div class="col-lg-12">
-                                    <div class="tp-project-details-text mb-50">
-                                        <h3 class="tp-project-details-title">{{ $project['title'] }}</h3>
-                                        {!! $project['description'] !!}
+                                    <div class="tp-project-details-text mb-50 my-3 ">
+                                        <h3 class="tp-project-details-title my-5">{{ $project['title'] }}</h3>
+                                        <p>
+                                            {!! $project['description'] !!}
+                                        </p>
+                                        <div class="price_cont">
+                                            @if ($project['price'] > 0)
+                                                <p>Price: &nbsp;</p>
+                                                <p>
+                                                    AED &nbsp;
+
+                                                    {{ $project['price'] }}
+                                                </p>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <form>
-                            <div class="card">
+                        <form class="card ">
+                            <div>
                                 <div class="card-body">
                                     <div id="" class="col-md-8 mx-auto paymet-box"></div>
                                     @if ($project['price'] > 0)
@@ -544,22 +548,30 @@
                                                             name="email">
                                                     </div>
                                                 </div>
-                                                <div class="order-button-payment mt-4">
-                                                    <button type="button" id="payment-button"
-                                                        class="tp-btn tp-color-btn w-100 banner-animation">Buy it
-                                                        now</button>
+
+                                                <div class="container mt-4">
+                                                    <div class="row">
+                                                        <div class="col-md-6 offset-md-3">
+                                                            <div class="order-button-payment text-center">
+                                                                <button type="button" id="payment-button"
+                                                                    class="tp-btn tp-color-btn w-100 banner-animation ">Buy
+                                                                    it
+                                                                    now
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @else
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="payment-method">
-                                                <div class="order-button-payment mt-4">
-                                                    <a href="{{ $project["link"] }}" id="payment-button"
-                                                        class="tp-btn tp-color-btn w-100 banner-animation">Visit</a>
+                                        @else
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="payment-method">
+                                                    <div class="order-button-payment mt-4">
+                                                        <a href="{{ $project['link'] }}" id="payment-button"
+                                                            class="tp-btn tp-color-btn w-100 banner-animation">Visit</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     @endif
                                 </div>
                             </div>

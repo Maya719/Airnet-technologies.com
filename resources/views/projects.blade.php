@@ -51,10 +51,10 @@
     }
 
     .text-blk.headingText {
-        font-size: 25px;
-        font-weight: 700;
+        font-size: 18px;
+        font-weight: bold;
         line-height: 34px;
-        color: rgb(51, 51, 51);
+        color:rgb(235, 195, 51);
         padding-top: 0px;
         padding-right: 10px;
         padding-bottom: 0px;
@@ -107,6 +107,55 @@
         padding-left: 10px;
     }
 
+    .description_container {
+        overflow: auto;
+        max-height: 25rem;
+        scrollbar-width: thin;
+
+        scrollbar-color: #d1d0d0 #f0f0f0;
+
+    }
+
+    .description_container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .description_container::-webkit-scrollbar-thumb {
+        background-color: #888888;
+
+        border-radius: 4px;
+
+    }
+
+
+    .description_container::-webkit-scrollbar-track {
+        background-color: #f0f0f0;
+
+    }
+
+    .price_cont {
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+
+
+    }
+
+    .price_cont>p {
+
+        font-weight: bold;
+        padding: 0.3rem;
+
+    }
+
+    .edit_btn_cont {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .explore {
         font-size: 20px;
         line-height: 28px;
@@ -134,6 +183,7 @@
         border-image-outset: initial;
         border-image-repeat: initial;
         cursor: pointer;
+        text-align: center;
     }
 
     .explore:hover {
@@ -385,16 +435,26 @@
                                                         {{ $project->title }}
                                                     </p>
                                                     <p class="text-blk description">
-                                                      {!! $project->description !!}
+                                                    <div class="description_container">
+                                                        {!! $project->description !!}
+                                                    </div>
                                                     </p>
                                                     @if ($project->price)
-                                                        <p>$ {{ $project->price }}</p>
+                                                        <div class="price_cont">
+                                                            <p style="">
+                                                                Price:
+                                                            </p>
+                                                            <p>AED {{ $project->price }}</p>
+                                                        </div>
                                                     @endif
-                                                    <button class="explore" id="project-link" onclick="edit_link(this)"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                        data-id="{{ $project->id }}">
-                                                        Edit
-                                                    </button>
+                                                    <div class="edit_btn_cont">
+                                                        <button class="explore" id="project-link"
+                                                            onclick="edit_link(this)" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal"
+                                                            data-id="{{ $project->id }}">
+                                                            Edit
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         @else
@@ -408,15 +468,27 @@
                                                     <p class="text-blk subHeadingText">
                                                         {{ $project->title }}
                                                     </p>
-                                                      {!! $project->description !!}
+                                                    <p class="text-blk description">
+                                                    <div class="description_container">
+                                                        {!! $project->description !!}
+                                                    </div>
+                                                    </p>
                                                     @if ($project->price)
-                                                        <p>$ {{ $project->price }}</p>
+                                                        <div class="price_cont">
+                                                            <p style="">
+                                                                Price:
+                                                            </p>
+                                                            <p>AED {{ $project->price }}</p>
+                                                        </div>
                                                     @endif
-                                                    <button class="explore" id="project-link" onclick="edit_link(this)"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                        data-id="{{ $project->id }}">
-                                                        Edit
-                                                    </button>
+                                                    <div class="edit_btn_cont">
+                                                        <button class="explore" id="project-link"
+                                                            onclick="edit_link(this)" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal"
+                                                            data-id="{{ $project->id }}">
+                                                            Edit
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         @endif

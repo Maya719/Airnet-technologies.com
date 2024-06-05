@@ -64,8 +64,7 @@
 
                 <div class="col-lg-12 my-5 text-center">
                     <div class="section-heading">
-                        <h2>Our Products</h2>
-
+                        <h2>Our Services</h2>
                     </div>
                 </div>
 
@@ -76,7 +75,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
                             data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
-                            aria-selected="true">All</button>
+                            aria-selected="true">Peri</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
@@ -96,35 +95,51 @@
 
                 </ul>
                 <div class="tab-content my-5" id="myTabContent">
-                    {{-- all projects --}}
+                    {{-- peri  projects --}}
                     <div class="tab-pane fade show active " id="home-tab-pane" role="tabpanel"
                         aria-labelledby="home-tab" tabindex="0">
                         <div class="row gy-4  d-flex justify-content-center align-items-center">
                             <!-- Loop through projects -->
                             @foreach ($more_projects as $projects)
-                                <div class="card mb-3 projects_cards_css">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="{{ asset('storage/' . $projects['thumbnail']) }}" loading="lazy"
-                                                alt="{{ asset('storage/' . $projects['thumbnail']) }}"
-                                                class="img-fluid">
-                                        </div>
-                                        <div class="col-md-8 ">
-                                            <div
-                                                class="card-body h-100 d-flex flex-column justify-content-between align-item-center ">
-                                                <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
-                                                    <h5 class="card-title"><span>
-                                                            {{ $projects['title'] }} &nbsp;
-                                                        </span>
-                                                    </h5>
-                                                </a>
-                                                <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
+                                @if ($projects['category'] == 'plan')
+                                    <div class="card mb-3 projects_cards_css">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="{{ asset('storage/' . $projects['thumbnail']) }}"
+                                                    loading="lazy"
+                                                    alt="{{ asset('storage/' . $projects['thumbnail']) }}"
+                                                    class="img-fluid">
+                                            </div>
+                                            <div class="col-md-8 ">
+                                                <div
+                                                    class="card-body h-100 d-flex flex-column justify-content-between align-item-center ">
+                                                    <a
+                                                        href="{{ route('single_projects', ['id' => $projects['id']]) }}">
+                                                        <h5 class="card-title"><span>
+                                                                {{ $projects['title'] }} &nbsp;
+                                                            </span>
+                                                        </h5>
+                                                    </a>
+                                                    {{-- <a href="{{ route('single_projects', ['id' => $projects['id']]) }}"
+                                                    class="description-container">
                                                     {!! $projects['description'] !!}
-                                                </a>
+                                                </a> --}}
+
+                                                    <div class="description-container">
+                                                        <a
+                                                            href="{{ route('single_projects', ['id' => $projects['id']]) }}">
+                                                            {!! $projects['description'] !!}
+                                                        </a>
+                                                    </div>
+                                                    <button class="read-more-button">Read More</button>
+
+
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                             <br>
 
@@ -156,10 +171,13 @@
                                                             </span>
                                                         </h5>
                                                     </a>
-                                                    <a
-                                                        href="{{ route('single_projects', ['id' => $projects['id']]) }}">
-                                                        {!! $projects['description'] !!}
-                                                    </a>
+                                                    <div class="description-container">
+                                                        <a
+                                                            href="{{ route('single_projects', ['id' => $projects['id']]) }}">
+                                                            {!! $projects['description'] !!}
+                                                        </a>
+                                                    </div>
+                                                    <button class="read-more-button">Read More</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,10 +215,13 @@
                                                             </span>
                                                         </h5>
                                                     </a>
-                                                    <a
-                                                        href="{{ route('single_projects', ['id' => $projects['id']]) }}">
-                                                        {!! $projects['description'] !!}
-                                                    </a>
+                                                    <div class="description-container">
+                                                        <a
+                                                            href="{{ route('single_projects', ['id' => $projects['id']]) }}">
+                                                            {!! $projects['description'] !!}
+                                                        </a>
+                                                    </div>
+                                                    <button class="read-more-button">Read More</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -238,10 +259,13 @@
                                                             </span>
                                                         </h5>
                                                     </a>
-                                                    <a
-                                                        href="{{ route('single_projects', ['id' => $projects['id']]) }}">
-                                                        {!! $projects['description'] !!}
-                                                    </a>
+                                                    <div class="description-container">
+                                                        <a
+                                                            href="{{ route('single_projects', ['id' => $projects['id']]) }}">
+                                                            {!! $projects['description'] !!}
+                                                        </a>
+                                                    </div>
+                                                    <button class="read-more-button">Read More</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -278,23 +302,39 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <style>
-        .visit_btn {
-            color: black;
-            text-align: center;
-            display: inline-block;
-            padding: 5px 10px;
-            background: linear-gradient(to right, lightblue, white);
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
 
-        .visit_btn:hover {
-            background: linear-gradient(to right, #012971, #4682B4);
-            color: white;
-        }
-    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var descriptionContainers = document.querySelectorAll('.description-container');
+
+            descriptionContainers.forEach(function(container) {
+                var contentHeight = container.scrollHeight;
+                var maxHeight = parseInt(window.getComputedStyle(container).maxHeight);
+
+                if (contentHeight > maxHeight) {
+                    var readMoreButton = container.nextElementSibling;
+                    readMoreButton.style.display = 'block';
+                }
+            });
+
+            var readMoreButtons = document.querySelectorAll('.read-more-button');
+
+            readMoreButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var container = this.previousElementSibling;
+                    container.classList.toggle('expanded');
+                    if (container.classList.contains('expanded')) {
+                        this.textContent = 'Read Less';
+                    } else {
+                        this.textContent = 'Read More';
+                    }
+                });
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>
