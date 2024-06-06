@@ -67,7 +67,6 @@
                                 <div class="table-responsive py-4">
 
 
-
                                     <form id="privacyPolicyForm" method="POST"
                                         action="{{ route('save_privacy_policy') }}">
                                         @csrf
@@ -95,6 +94,7 @@
                                             <button type="submit" class="btn btn-primary my-5">Submit</button>
                                         </fieldset>
                                     </form>
+
 
 
                                 </div>
@@ -190,6 +190,37 @@
                 }
             });
         </script>
+
+        <script>
+            document.getElementById('languageSelect').addEventListener('change', function() {
+                var selectedLanguage = this.value;
+                fetchPolicy(selectedLanguage);
+            });
+
+            function fetchPolicy(language) {
+                fetch("/privacy-policy?language=" + language)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById('description_add').value = data;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching policy:', error);
+                    });
+            }
+
+            // Initial load
+            window.addEventListener('DOMContentLoaded', function() {
+                var selectedLanguage = "{{ $selected_language }}"; // Get the selected language from PHP variable
+                fetchPolicy(selectedLanguage);
+            });
+        </script>
+
+
 
 
 

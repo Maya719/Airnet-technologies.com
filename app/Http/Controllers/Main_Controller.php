@@ -65,28 +65,21 @@ class Main_Controller extends Controller
         }
     }
 
-    public function privacy_policy(Request $request)
+    public function privacy_policy()
     {
-        // frontend (view) privacy_policy
+        // Return HTML response
+        return view('privacy_policy_view');
+    }
 
+    public function get_privacy_policy(Request $request)
+    {
+        $language = $request->query('language');
 
-        // $privacyPolicy = privacy_policy::first();
+        $policy = privacy_policy::where('language', $language)->first();
 
-
-        // return view('privacy_policy_view', ['main_page' => "Payments", 'privacy_policy'=>$privacyPolicy]);
-
-
-        //    ----------------------------
-
-        $language = $request->input('language', 'english'); // Default to English if language not provided
-
-        // Fetch the policy for the selected language
-        $privacyPolicy = privacy_policy::where('language', $language)->first();
-
-        $policyContent = $privacyPolicy ? $privacyPolicy->policy : '';
 
         // Return HTML response
-        return view('privacy_policy_view', ['policyContent' => $policyContent]);
+        return response()->json(['policy' => $policy ? $policy->policy : '']);
     }
 
 
@@ -102,5 +95,4 @@ class Main_Controller extends Controller
         // frontend view
         return view('terms_conditions_view');
     }
-
 }

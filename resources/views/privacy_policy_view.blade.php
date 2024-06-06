@@ -94,16 +94,8 @@
                             </select>
                         </span>
                     </p>
-
-                    {{-- <p>
-                        {!! $privacy_policy['policy'] !!}
-                    </p> --}}
-
-
                     <div id="policyContainer">
-                        {!! $policyContent !!}
                     </div>
-
                 </div>
             </div>
 
@@ -142,17 +134,18 @@
         });
 
         function fetchPolicy(language) {
-            fetch("/privacy-policy?language=" + language)
-                .then(response => response.text())
+            fetch("/get-privacy-policy?language=" + language)
+                .then(response => response.json())
                 .then(data => {
-                    document.getElementById('policyContainer').innerHTML = "<p>" + data + "</p>";
+
+                    console.log(data.policy);
+                    document.getElementById('policyContainer').innerHTML =  data.policy;
                 })
                 .catch(error => {
                     console.error('Error fetching policy:', error);
                 });
         }
 
-        // Initial load
         fetchPolicy(document.getElementById('languageSelect').value);
     </script>
 

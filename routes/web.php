@@ -81,6 +81,8 @@ Route::get('/home-contact', [Main_Controller::class, 'index'])->name('contact');
 
 Route::get('/privacy-policy', [Main_Controller::class, 'privacy_policy'])->name('privacy_policy_view');
 
+Route::get('/get-privacy-policy', [Main_Controller::class, 'get_privacy_policy'])->name('get-privacy_policy_view');
+
 Route::get('/refund-policy', [Main_Controller::class, 'refund_policy'])->name('refund_policy_view');
 Route::get('/terms-conditions', [Main_Controller::class, 'terms_conditions'])->name('terms_conditions_view');
 
