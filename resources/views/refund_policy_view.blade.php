@@ -87,14 +87,15 @@
                 <div class="col-sm-12">
                     <p class="text-center h4 language_cont flex-container">
                         <span class="policy-text">Refund Policy</span>
-
+                        <span class="dropdown">
+                            <select id="languageSelect" class="form-select" aria-label="Default select example">
+                                <option value="english" selected>English</option>
+                                <option value="arabic">Arabic</option>
+                            </select>
+                        </span>
                     </p>
-
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa cupiditate eaque molestias iusto
-                        fugiat consequatur fuga nulla, tempora accusamus numquam corrupti optio deleniti in commodi eum
-                        doloremque molestiae enim ratione!
-                    </p>
+                    <div id="refund_policy">
+                    </div>
 
                 </div>
             </div>
@@ -128,6 +129,27 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
 
+    <script>
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            fetchPolicy(selectedLanguage);
+        });
+
+        function fetchPolicy(language) {
+            fetch("/get-refund-policy?language=" + language)
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data.refund_policy);
+                    document.getElementById('refund_policy').innerHTML = data.refund_policy;
+                })
+                .catch(error => {
+                    console.error('Error fetching policy:', error);
+                });
+        }
+
+        fetchPolicy(document.getElementById('languageSelect').value);
+    </script>
 
 </body>
 

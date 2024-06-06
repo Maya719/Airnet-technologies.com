@@ -86,16 +86,16 @@
             <div class="row">
                 <div class="col-sm-12">
                     <p class="text-center h4 language_cont flex-container">
-                        <span class="policy-text">Terms and Conditions</span>
-
+                        <span class="policy-text">Terms & Conditons</span>
+                        <span class="dropdown">
+                            <select id="languageSelect" class="form-select" aria-label="Default select example">
+                                <option value="english" selected>English</option>
+                                <option value="arabic">Arabic</option>
+                            </select>
+                        </span>
                     </p>
-
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa cupiditate eaque molestias iusto
-                        fugiat consequatur fuga nulla, tempora accusamus numquam corrupti optio deleniti in commodi eum
-                        doloremque molestiae enim ratione!
-                    </p>
-
+                    <div id="terms_conditons">
+                    </div>
                 </div>
             </div>
 
@@ -127,6 +127,27 @@
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
+    <script>
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            fetchPolicy(selectedLanguage);
+        });
+
+        function fetchPolicy(language) {
+            fetch("/get-terms-conditions?language=" + language)
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data.terms_conditions);
+                    document.getElementById('terms_conditons').innerHTML =  data.terms_conditions;
+                })
+                .catch(error => {
+                    console.error('Error fetching terms_conditions:', error);
+                });
+        }
+
+        fetchPolicy(document.getElementById('languageSelect').value);
+    </script>
 
 
 </body>

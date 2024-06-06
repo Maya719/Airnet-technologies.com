@@ -7,9 +7,8 @@ use App\Models\privacy_policy;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use App\Models\ProjectModel;
-
-
-
+use App\Models\RefundPolicy;
+use App\Models\TermsConditions;
 
 class Main_Controller extends Controller
 {
@@ -83,16 +82,39 @@ class Main_Controller extends Controller
     }
 
 
+
     public function refund_policy(Request $request)
     {
         // frontend view
-
         return view('refund_policy_view');
     }
+    public function get_refund_policy(Request $request)
+    {
+        $language = $request->query('language');
+
+        $refund_policy = RefundPolicy::where('language', $language)->first();
+
+
+        // Return HTML response
+        return response()->json(['refund_policy' => $refund_policy ? $refund_policy->refund_policy : '']);
+    }
+
+
+
 
     public function terms_conditions(Request $request)
     {
         // frontend view
         return view('terms_conditions_view');
+    }
+    public function get_terms_conditions(Request $request)
+    {
+        $language = $request->query('language');
+
+        $terms_conditions = TermsConditions::where('language', $language)->first();
+
+
+        // Return HTML response
+        return response()->json(['terms_conditions' => $terms_conditions ? $terms_conditions->terms_conditions : '']);
     }
 }

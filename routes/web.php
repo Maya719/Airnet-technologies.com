@@ -84,7 +84,11 @@ Route::get('/privacy-policy', [Main_Controller::class, 'privacy_policy'])->name(
 Route::get('/get-privacy-policy', [Main_Controller::class, 'get_privacy_policy'])->name('get-privacy_policy_view');
 
 Route::get('/refund-policy', [Main_Controller::class, 'refund_policy'])->name('refund_policy_view');
+Route::get('/get-refund-policy', [Main_Controller::class, 'get_refund_policy'])->name('get_refund_policy_view');
+
+
 Route::get('/terms-conditions', [Main_Controller::class, 'terms_conditions'])->name('terms_conditions_view');
+Route::get('/get-terms-conditions', [Main_Controller::class, 'get_terms_conditions'])->name('get-terms-conditions_view');
 
 
 
@@ -235,5 +239,24 @@ Route::post('/store_privacy_policy', [DashboardController::class, 'save_privacy_
     ->name('save_privacy_policy');
 
 
+// terms & conditons
+
+Route::get('/dashboard-terms-conditions', [DashboardController::class, 'terms_conditions'])
+    ->middleware(['auth', 'verified'])
+    ->name('terms_conditions');
+
+Route::post('/store-terms-conditions', [DashboardController::class, 'save_terms_conditions'])
+    ->middleware(['auth', 'verified'])
+    ->name('save_terms_conditions');
+
+// refund policy
+
+Route::get('/dashboard-refund-policy', [DashboardController::class, 'refund_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('refund_policy');
+
+Route::post('/store-refund-policy', [DashboardController::class, 'save_refund_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('save_refund_policy');
 
 require __DIR__ . '/auth.php';
