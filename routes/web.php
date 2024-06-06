@@ -79,6 +79,13 @@ Route::get('/home-blogs', [Main_Controller::class, 'index'])->name('blog');
 Route::get('/home-contact', [Main_Controller::class, 'index'])->name('contact');
 
 
+Route::get('/privacy-policy', [Main_Controller::class, 'privacy_policy'])->name('privacy_policy_view');
+
+Route::get('/refund-policy', [Main_Controller::class, 'refund_policy'])->name('refund_policy_view');
+Route::get('/terms-conditions', [Main_Controller::class, 'terms_conditions'])->name('terms_conditions_view');
+
+
+
 
 
 
@@ -123,6 +130,7 @@ Route::post('/payments', [PaymentController::class, 'edit_payment_keys'])
 Route::get('/dashboard-orders', [PaymentController::class, 'get_orders'])
     ->middleware(['auth', 'verified'])
     ->name('get_orders');
+
 //   projects
 Route::get('/projects', [ProjectController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -163,7 +171,6 @@ Route::get('/get_member_by_id', [TeamController::class, 'get_member_by_id'])
 Route::post('/update_member', [TeamController::class, 'update'])
     ->middleware(['auth', 'verified'])
     ->name('update_member');
-
 
 
 
@@ -213,4 +220,18 @@ Route::get('/change_logo', [DashboardController::class, 'show'])
 Route::post('/save_logo', [DashboardController::class, 'save_logo'])
     ->middleware(['auth', 'verified'])
     ->name('save_logo');
+
+
+// privacy_policy
+
+Route::get('/privacy_policy', [DashboardController::class, 'privacy_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('privacy_policy');
+
+Route::post('/store_privacy_policy', [DashboardController::class, 'save_privacy_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('save_privacy_policy');
+
+
+
 require __DIR__ . '/auth.php';

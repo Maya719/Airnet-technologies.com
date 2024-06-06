@@ -284,6 +284,7 @@
 
 
     </main>
+
     <footer>
         @include('footer')
     </footer>

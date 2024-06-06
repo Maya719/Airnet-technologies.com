@@ -369,6 +369,15 @@
             }
         }
 
+
+        .tp-project-details-thumb-1 img{
+            width:60%;
+            height: 50%;
+
+        }
+
+
+
         @media screen and (max-width:770px) {
             .fatoorahFields {
 
@@ -394,6 +403,7 @@
                 height: 7vh;
             }
         }
+
         .price_cont {
 
             display: flex;
@@ -451,8 +461,7 @@
                     <div class="row">
                         <div class="col-lg-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
                             <div class="tp-project-details-thumb-1 text-center mb-5">
-                                <img src="{{ asset('storage/' . $project['thumbnail']) }}" height="500"
-                                    alt="">
+                                <img src="{{ asset('storage/' . $project['thumbnail']) }}" alt="">
                             </div>
                         </div>
                     </div>

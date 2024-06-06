@@ -46,8 +46,8 @@
                                     @elseif($projects['price'] <= 0)
                                         <div class="col-lg-12 col-md-12">
                                             <div class="payment-method">
-                                                <div class="order-button-payment mt-4">
-                                                    <a href="{{ $projects['link'] }}" id="payment-button"
+                                                <div class="order-button-payment btn btn-warning ">
+                                                    <a href="{{ $projects['link'] }}"  id="payment-button"
                                                         class="tp-btn tp-color-btn w-100 banner-animation">Visit</a>
                                                 </div>
                                             </div>

@@ -12,7 +12,6 @@
           <li><a class="nav-link scrollto " href="#portfolio">Services</a></li>
           <li><a class="nav-link scrollto" href="#technologies">Technologies</a></li>
 
-
           {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
