@@ -89,7 +89,6 @@
 
                                             <div class="mb-3 my-5">
                                                 <label>Privacy Policy <span class="text-danger">*</span></label>
-                                                {{-- <textarea class="form-control" id="description_add" name="refund_policy" required>{{ $last_saved_policy }}</textarea> --}}
                                                 <textarea class="form-control" id="description_add" name="refund_policy" required></textarea>
                                             </div>
 
