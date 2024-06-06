@@ -85,22 +85,13 @@
                                                     </option>
                                                 </select>
 
-                                                {{-- <select id="languageSelect" class="form-select form-select-lg mb-3"
-                                                    aria-label=".form-select-lg example" name="language" required>
-                                                    <option value="english">
-                                                        English
-                                                    </option>
-                                                    <option value="arabic">
-                                                        Arabic
-                                                    </option>
-                                                </select> --}}
+
 
                                             </div>
 
                                             <div class="mb-3 my-5">
                                                 <label>Privacy Policy <span class="text-danger">*</span></label>
                                                 <textarea class="form-control" id="description_add" name="terms_conditions" required>{{ $last_saved_policy }}</textarea>
-                                                {{-- <textarea class="form-control" id="description_add" name="terms_conditions" required></textarea> --}}
                                             </div>
 
                                             <button type="submit" class="btn btn-primary my-5">Submit</button>
@@ -186,16 +177,16 @@
                 var selectedLanguage = document.getElementById('languageSelect').value;
                 var policy = document.getElementById('description_add').value;
 
-                localStorage.removeItem('selected_language');
-                localStorage.removeItem('last_saved_policy');
+                localStorage.removeItem('saved_terms_condition_selected_language');
+                localStorage.removeItem('last_saved_terms_condition');
 
-                localStorage.setItem('selected_language', selectedLanguage);
-                localStorage.setItem('last_saved_policy', policy);
+                localStorage.setItem('saved_terms_condition_selected_language', selectedLanguage);
+                localStorage.setItem('last_saved_terms_condition', policy);
             });
 
             window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = localStorage.getItem('selected_language');
-                var policy = localStorage.getItem('last_saved_policy');
+                var selectedLanguage = localStorage.getItem('saved_terms_condition_selected_language');
+                var policy = localStorage.getItem('last_saved_terms_condition');
                 if (selectedLanguage && policy) {
                     document.getElementById('languageSelect').value = selectedLanguage;
                     document.getElementById('description_add').value = policy;

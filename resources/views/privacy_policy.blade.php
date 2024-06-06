@@ -174,15 +174,15 @@
                 var selectedLanguage = document.getElementById('languageSelect').value;
                 var policy = document.getElementById('description_add').value;
 
-                localStorage.removeItem('selected_language');
+                localStorage.removeItem('saved_policy_selected_language');
                 localStorage.removeItem('last_saved_policy');
 
-                localStorage.setItem('selected_language', selectedLanguage);
+                localStorage.setItem('saved_policy_selected_language', selectedLanguage);
                 localStorage.setItem('last_saved_policy', policy);
             });
 
             window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = localStorage.getItem('selected_language');
+                var selectedLanguage = localStorage.getItem('saved_policy_selected_language');
                 var policy = localStorage.getItem('last_saved_policy');
                 if (selectedLanguage && policy) {
                     document.getElementById('languageSelect').value = selectedLanguage;

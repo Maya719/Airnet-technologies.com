@@ -85,10 +85,6 @@
                                                     </option>
                                                 </select>
 
-
-
-
-
                                             </div>
 
                                             <div class="mb-3 my-5">
@@ -182,16 +178,16 @@
                 var selectedLanguage = document.getElementById('languageSelect').value;
                 var policy = document.getElementById('description_add').value;
 
-                localStorage.removeItem('selected_language');
-                localStorage.removeItem('last_saved_policy');
+                localStorage.removeItem('saved_refund_policy_selected_language');
+                localStorage.removeItem('last_saved_refund_policy');
 
-                localStorage.setItem('selected_language', selectedLanguage);
-                localStorage.setItem('last_saved_policy', policy);
+                localStorage.setItem('saved_refund_policy_selected_language', selectedLanguage);
+                localStorage.setItem('last_saved_refund_policy', policy);
             });
 
             window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = localStorage.getItem('selected_language');
-                var policy = localStorage.getItem('last_saved_policy');
+                var selectedLanguage = localStorage.getItem('saved_refund_policy_selected_language');
+                var policy = localStorage.getItem('last_saved_refund_policy');
                 if (selectedLanguage && policy) {
                     document.getElementById('languageSelect').value = selectedLanguage;
                     document.getElementById('description_add').value = policy;
@@ -214,7 +210,7 @@
                         return response.text();
                     })
                     .then(data => {
-                        document.getElementById('description_add').value = data;
+                        document.getElementById('description_add').value = data.refund_policy;
                     })
                     .catch(error => {
                         console.error('Error fetching policy:', error);
