@@ -215,7 +215,7 @@
 
             // Initial load
             window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = "{{ $selected_language }}"; // Get the selected language from PHP variable
+                var selectedLanguage = "{{ $selected_language }}";
                 fetchPolicy(selectedLanguage);
             });
         </script>
