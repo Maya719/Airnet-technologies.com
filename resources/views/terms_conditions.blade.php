@@ -195,32 +195,32 @@
         </script>
 
         <script>
-            document.getElementById('languageSelect').addEventListener('change', function() {
-                var selectedLanguage = this.value;
-                fetchPolicy(selectedLanguage);
-            });
-
             function fetchPolicy(language) {
-                fetch("/terms-conditions?language=" + language)
+                fetch("/get-privacy-policy?language=" + language)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
-                        return response.text();
+                        return response.json();
                     })
                     .then(data => {
-                        document.getElementById('description_add').value = data;
+                        console.log('Fetched policy:', data.policy);
+                        tinymce.get('description_add').setContent(data.policy);
                     })
                     .catch(error => {
                         console.error('Error fetching policy:', error);
                     });
             }
 
-            // Initial load
-            window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = "{{ $selected_language }}"; // Get the selected language from PHP variable
+            // Add event listener for language select change
+            document.getElementById('languageSelect').addEventListener('change', function() {
+                var selectedLanguage = this.value;
+                // Fetch policy content when the language select changes
                 fetchPolicy(selectedLanguage);
             });
+
+            // Fetch policy content when the page loads
+            fetchPolicy(document.getElementById('languageSelect').value);
         </script>
 
 

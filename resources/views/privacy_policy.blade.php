@@ -67,7 +67,7 @@
                                 <div class="table-responsive py-4">
 
 
-                                    <form id="privacyPolicyForm" method="POST"
+                                    {{-- <form id="privacyPolicyForm" method="POST"
                                         action="{{ route('save_privacy_policy') }}">
                                         @csrf
                                         <fieldset>
@@ -89,6 +89,36 @@
                                             <div class="mb-3 my-5">
                                                 <label>Privacy Policy <span class="text-danger">*</span></label>
                                                 <textarea class="form-control" id="description_add" name="policy" required>{{ $last_saved_policy }}</textarea>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary my-5">Submit</button>
+                                        </fieldset>
+                                    </form> --}}
+
+
+
+                                    <form id="privacyPolicyForm" method="POST"
+                                        action="{{ route('save_privacy_policy') }}">
+                                        @csrf
+                                        <fieldset>
+                                            <legend class="text-center">Privacy Policy</legend>
+                                            <br>
+                                            <div class="mb-3 my-5">
+                                                <label>Select Language <span class="text-danger">*</span></label>
+                                                <select id="languageSelect" class="form-select form-select-lg mb-3"
+                                                    aria-label=".form-select-lg example" name="language" required>
+                                                    <option value="english"
+                                                        {{ $selected_language == 'english' ? 'selected' : '' }}>English
+                                                    </option>
+                                                    <option value="arabic"
+                                                        {{ $selected_language == 'arabic' ? 'selected' : '' }}>Arabic
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3 my-5">
+                                                <label>Privacy Policy <span class="text-danger">*</span></label>
+                                                <textarea class="form-control" id="description_add" name="policy" value="" required>{{ $last_saved_policy }}</textarea>
                                             </div>
 
                                             <button type="submit" class="btn btn-primary my-5">Submit</button>
@@ -192,35 +222,33 @@
         </script>
 
         <script>
-            document.getElementById('languageSelect').addEventListener('change', function() {
-                var selectedLanguage = this.value;
-                fetchPolicy(selectedLanguage);
-            });
-
             function fetchPolicy(language) {
-                fetch("/privacy-policy?language=" + language)
+                fetch("/get-privacy-policy?language=" + language)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
-                        return response.text();
+                        return response.json();
                     })
                     .then(data => {
-                        document.getElementById('description_add').value = data;
+                        console.log('Fetched policy:', data.policy);
+                        tinymce.get('description_add').setContent(data.policy);
                     })
                     .catch(error => {
                         console.error('Error fetching policy:', error);
                     });
             }
 
-            // Initial load
-            window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = "{{ $selected_language }}";
+            // Add event listener for language select change
+            document.getElementById('languageSelect').addEventListener('change', function() {
+                var selectedLanguage = this.value;
+                // Fetch policy content when the language select changes
                 fetchPolicy(selectedLanguage);
             });
+
+            // Fetch policy content when the page loads
+            fetchPolicy(document.getElementById('languageSelect').value);
         </script>
-
-
 
 
 
