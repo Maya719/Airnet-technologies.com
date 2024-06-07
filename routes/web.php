@@ -39,17 +39,30 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 
 Route::get('/blog-description/{blog_id}', [Main_Controller::class, 'load_blog_description'])->name('blog-description');
 
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Payment Route
-Route::post('/create_session', [PaymentController::class, 'create_session'])->name('create_session');
+Route::post('/create_invoice', [PaymentController::class, 'create_invoice'])->name('create_invoice');
+Route::post('/stripe_invoice', [PaymentController::class, 'stripe_invoice'])->name('stripe_invoice');
+Route::get('/create_session/{order_id}', [PaymentController::class, 'create_session'])->name('create_session');
 Route::get('/success', [PaymentController::class, 'soc'])->name('checkout.success');
 Route::get('/cancel', [PaymentController::class, 'soc'])->name('checkout.cancel');
-// myFatoorah
+Route::get('/invoice/{order_id}', [PaymentController::class, 'invoice'])->name('invoice');
 
+// myFatoorah
 // Route for creating MyFatoorah invoice
 Route::post('/myfatoorah/invoice', [MyFatoorahController::class, 'index'])->name('myfatoorah.invoice');
 
 // Route for handling MyFatoorah payment callback
 Route::post('/myfatoorah/callback', [MyFatoorahController::class, 'callback'])->name('myfatoorah.callback');
+Route::get('/invoice/{project_id}/{invoice_id}/{invoiceUrl}', [MyFatoorahController::class, 'invoice'])->name('myfatoorah_invoice');
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // ================================================
 //
 //
@@ -75,6 +88,9 @@ Route::get('/home-team', [Main_Controller::class, 'index'])->name('member');
 Route::get('/home-blogs', [Main_Controller::class, 'index'])->name('blog');
 
 Route::get('/home-contact', [Main_Controller::class, 'index'])->name('contact');
+
+
+
 
 
 

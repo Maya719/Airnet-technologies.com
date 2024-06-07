@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\OrderModel;
 use App\Models\ProjectModel;
 use App\Models\Setting;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf as Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use MyFatoorah\Library\PaymentMyfatoorahApiV2;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class MyFatoorahController extends Controller
 {
@@ -42,56 +44,22 @@ class MyFatoorahController extends Controller
      */
     public function index(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|max:255',
-            'cname' => 'required',
-            'email' => 'required|email',
-            'countryCode' => 'required',
-            'phone' => 'required',
-        ]);
 
-        if ($validator->fails()) {
-            $response = [
-                'IsSuccess' => 'false',
-                'Message' => 'All Data Needed.',
-            ];
-            return response()->json($response);
-        }
-
-        $data = $validator->validated();
-        $id = $request->post('id');
-        $cname = $request->post('cname');
-        $email = $request->post('email');
-        $phone = $request->post('phone');
-        $countryCode = $request->post('countryCode');
-        $project = ProjectModel::find($id);
-
+        $input = $request->all();
+        $project = ProjectModel::find($input["id"]);
+        $customerData = [
+            'name' => $input['firstname'] . ' ' . $input['lastname'],
+            'email' => $input['email'],
+            'phone' =>  $input['phone'],
+            'countryCode' =>  $input['countryCode'],
+        ];
         try {
             $paymentMethodId = 0;
             $totalValue = $project->price;
-            $curlData = $this->getPayLoadData($project->id, $project->title, $totalValue, $email, $cname, $phone,$countryCode);
+            $curlData = $this->getPayLoadData($project->id, $project->title, $totalValue, $customerData["email"], $customerData["name"], $customerData["phone"], $customerData["countryCode"]);
             $data = $this->mfObj->getInvoiceURL($curlData, $paymentMethodId);
-
-            $response = [
-                'IsSuccess' => 'true',
-                'Message' => 'Invoice created successfully.',
-                'Data' => $data,
-                'product' => $project
-            ];
-
-            $pdf = Dompdf::loadView('template', $response);
-            $pdf->setPaper('A4', 'landscape');
-            $pdfContent = $pdf->output();
-            $pdfPath = 'public/invoices/' . uniqid('invoice_') . '.pdf';
-            Storage::put($pdfPath, $pdfContent);
-            $response = [
-                'IsSuccess' => 'true',
-                'Message' => 'Invoice created successfully.',
-                'Data' => $data,
-                'product' => $project,
-                'pdf_url' => Storage::url($pdfPath)
-            ];
-            return response()->json($response);
+            $urlWithoutPart = str_replace(env("MY_FATOORAH_URL"), '', $data["invoiceURL"]);
+            return redirect()->route('myfatoorah_invoice', ['project_id' => $project->id, 'invoice_id' => $data["invoiceId"], 'invoiceUrl' => $urlWithoutPart]);
         } catch (\Exception $e) {
             $response = ['IsSuccess' => 'false', 'Message' => $e->getMessage()];
             return response()->json($response);
@@ -106,7 +74,7 @@ class MyFatoorahController extends Controller
      * @param int|string $orderId
      * @return array
      */
-    private function getPayLoadData($orderId, $productName, $totalValue, $email, $cname, $phone,$countryCode)
+    private function getPayLoadData($orderId, $productName, $totalValue, $email, $cname, $phone, $countryCode)
     {
 
         $callbackURL = route('myfatoorah.callback');
@@ -150,17 +118,40 @@ class MyFatoorahController extends Controller
             $error = 'success';
             if ($data->InvoiceStatus == 'Paid') {
                 $msg = 'Invoice is paid successfull.';
+                return redirect()->route('index')
+                    ->with($error, $msg);
             } else {
                 $msg = 'Invoice is not paid due to ' . $data->InvoiceError;
                 $error = 'error';
+                return redirect()->route('index')
+                    ->with($error, $msg);
             }
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $error = 'error';
+            return redirect()->route('index')
+                ->with($error, $msg);
         }
-        return redirect()->route('index')
-            ->with($error, $msg);
     }
 
+    public function invoice($product_id, $invoice_id, $invoiceUrl)
+    {
+        $project = ProjectModel::find($product_id);
+        $KeyType = 'InvoiceId';
+        $invoiceDetails = $this->mfObj->getPaymentStatus($invoice_id, $KeyType);
+        $ExpiryDate = $invoiceDetails->ExpiryDate;
+        $CustomerMobile = $invoiceDetails->CustomerMobile;
+        $CustomerName = $invoiceDetails->CustomerName;
+        $invoice = $invoiceDetails;
+        $invoice->customer_name = $CustomerName;
+        $invoice->customer_phone = $CustomerMobile;
+        $invoice->due_date = strtotime($ExpiryDate);
+        $invoice->customer_name = $CustomerName;
+        $invoiceUrl = env("MY_FATOORAH_URL") . $invoiceUrl;
+        $invoice->hosted_invoice_url = $invoiceUrl;
+        $qrCodes = [];
+        $simple = QrCode::size(150)->generate($invoiceUrl);
+        return view('template', compact('invoice', 'project','simple'));
+    }
     //-----------------------------------------------------------------------------------------------------------------------------------------
 }
