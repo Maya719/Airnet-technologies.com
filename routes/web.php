@@ -74,11 +74,13 @@ Route::get('/invoice/{project_id}/{invoice_id}/{invoiceUrl}', [MyFatoorahControl
 
 
 
-Route::get('/home', [Main_Controller::class, 'index'])->name('home');
+Route::get('/', [Main_Controller::class, 'index'])->name('home');
 
 Route::get('/home-about', [Main_Controller::class, 'index'])->name('about');
 
 Route::get('/home-services', [Main_Controller::class, 'index'])->name('services');
+
+Route::get('/home-technologies', [Main_Controller::class, 'index'])->name('technologies');
 
 
 Route::get('/home-portfolio', [Main_Controller::class, 'index'])->name('portfolio');
@@ -88,6 +90,19 @@ Route::get('/home-team', [Main_Controller::class, 'index'])->name('member');
 Route::get('/home-blogs', [Main_Controller::class, 'index'])->name('blog');
 
 Route::get('/home-contact', [Main_Controller::class, 'index'])->name('contact');
+
+
+Route::get('/privacy-policy', [Main_Controller::class, 'privacy_policy'])->name('privacy_policy_view');
+
+Route::get('/get-privacy-policy', [Main_Controller::class, 'get_privacy_policy'])->name('get-privacy_policy_view');
+
+Route::get('/refund-policy', [Main_Controller::class, 'refund_policy'])->name('refund_policy_view');
+Route::get('/get-refund-policy', [Main_Controller::class, 'get_refund_policy'])->name('get_refund_policy_view');
+
+
+Route::get('/terms-conditions', [Main_Controller::class, 'terms_conditions'])->name('terms_conditions_view');
+Route::get('/get-terms-conditions', [Main_Controller::class, 'get_terms_conditions'])->name('get-terms-conditions_view');
+
 
 
 
@@ -137,6 +152,7 @@ Route::post('/payments', [PaymentController::class, 'edit_payment_keys'])
 Route::get('/dashboard-orders', [PaymentController::class, 'get_orders'])
     ->middleware(['auth', 'verified'])
     ->name('get_orders');
+
 //   projects
 Route::get('/projects', [ProjectController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -177,7 +193,6 @@ Route::get('/get_member_by_id', [TeamController::class, 'get_member_by_id'])
 Route::post('/update_member', [TeamController::class, 'update'])
     ->middleware(['auth', 'verified'])
     ->name('update_member');
-
 
 
 
@@ -227,4 +242,37 @@ Route::get('/change_logo', [DashboardController::class, 'show'])
 Route::post('/save_logo', [DashboardController::class, 'save_logo'])
     ->middleware(['auth', 'verified'])
     ->name('save_logo');
+
+
+// privacy_policy
+
+Route::get('/privacy_policy', [DashboardController::class, 'privacy_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('privacy_policy');
+
+Route::post('/store_privacy_policy', [DashboardController::class, 'save_privacy_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('save_privacy_policy');
+
+
+// terms & conditons
+
+Route::get('/dashboard-terms-conditions', [DashboardController::class, 'terms_conditions'])
+    ->middleware(['auth', 'verified'])
+    ->name('terms_conditions');
+
+Route::post('/store-terms-conditions', [DashboardController::class, 'save_terms_conditions'])
+    ->middleware(['auth', 'verified'])
+    ->name('save_terms_conditions');
+
+// refund policy
+
+Route::get('/dashboard-refund-policy', [DashboardController::class, 'refund_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('refund_policy');
+
+Route::post('/store-refund-policy', [DashboardController::class, 'save_refund_policy'])
+    ->middleware(['auth', 'verified'])
+    ->name('save_refund_policy');
+
 require __DIR__ . '/auth.php';
