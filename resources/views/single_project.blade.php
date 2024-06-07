@@ -370,8 +370,8 @@
         }
 
 
-        .tp-project-details-thumb-1 img{
-            width:60%;
+        .tp-project-details-thumb-1 img {
+            width: 60%;
             height: 50%;
 
         }
@@ -488,20 +488,21 @@
                                 </div>
                             </div>
                         </div>
-                        <form class="card ">
-                            <div>
-                                <div class="card-body">
-                                    <div id="" class="col-md-8 mx-auto paymet-box"></div>
-                                    @if ($project['price'] > 0)
-                                        <p>
-                                        <h3 class="text-center">Payment Options </h3>
-                                        <p class="text-center"> Select your payment options</p>
-                                        </p>
-                                    @endif
-                                    @if ($project['price'] > 0)
-                                        <div class="col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="" class="col-md-8 mx-auto paymet-box"></div>
+                                @if ($project['price'] > 0)
+                                    <p>
+                                    <h3 class="text-center">Payment Options </h3>
+                                    <p class="text-center"> Select your payment options</p>
+                                    </p>
+                                @endif
+                                @if ($project['price'] > 0)
+                                    <div class="col-lg-12 col-md-12">
+                                        <form action="{{ route('create_invoice') }}" method="post" id="fatoorah_form">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $project['id'] }}">
                                             <div class="payment-method">
-
                                                 <div class="payment_cont">
                                                     <div>
                                                         @if (get_stripe_public_key() && get_stripe_secret_key())
@@ -523,68 +524,66 @@
                                                             </label>
                                                         @endif
                                                     </div>
-
-                                                    <div class="col-lg-12 mt-3 fatoorah-field" style="display: none;">
-                                                        <label for="cname">Name</label>
-                                                        <input type="text" class="form-control" id="cname"
-                                                            name="cname">
-                                                    </div>
-                                                    <div class="col-lg-4 mt-3 fatoorah-field" style="display: none;">
-                                                        <label for="countryCode">Country</label>
-                                                        <select class="form-select mdb-select" name="countryCode"
-                                                            id="countryCode" required>
-                                                            <option value="" selected>Select a Country
-                                                            </option>
-                                                            <option value="+965">+965 - Kuwait</option>
-                                                            <option value="+966">+966 - Saudi Arabia</option>
-                                                            <option value="+973">+973 - Bahrain</option>
-                                                            <option value="+971">+971 - United Arab Emirates
-                                                            </option>
-                                                            <option value="+974">+974 - Qatar</option>
-                                                            <option value="+968">+968 - Oman</option>
-                                                            <option value="+962">+962 - Jordan</option>
-                                                            <option value="+20">+20 - Egypt</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-lg-8 mt-3 fatoorah-field" style="display: none;">
-                                                        <label for="phone">Phone</label>
-                                                        <input type="text" class="form-control" id="phone"
-                                                            name="phone">
-                                                    </div>
-                                                    <div class="col-lg-12 mt-3 fatoorah-field" style="display: none;">
-                                                        <label for="email">Email</label>
-                                                        <input type="email" class="form-control" id="email"
-                                                            name="email">
-                                                    </div>
-                                                </div>
-
-                                                <div class="container mt-4">
-                                                    <div class="row">
-                                                        <div class="col-md-6 offset-md-3">
-                                                            <div class="order-button-payment text-center">
-                                                                <button type="button" id="payment-button"
-                                                                    class="tp-btn tp-color-btn w-100 banner-animation ">Buy
-                                                                    it
-                                                                    now
-                                                                </button>
-                                                            </div>
+                                                    <div class="row g-2">
+                                                        <div class="col-lg-6 mt-3 fatoorah-field">
+                                                            <label for="cname">First Name</label>
+                                                            <input type="text" class="form-control" id="firstname"
+                                                                name="firstname">
+                                                        </div>
+                                                        <div class="col-lg-6 mt-3 fatoorah-field">
+                                                            <label for="cname">Last Name</label>
+                                                            <input type="text" class="form-control" id="lastname"
+                                                                name="lastname">
+                                                        </div>
+                                                        <div class="col-lg-4 mt-3 fatoorah-field">
+                                                            <label for="countryCode">Country</label>
+                                                            <select class="form-select mdb-select" name="countryCode"
+                                                                id="countryCode" required>
+                                                                <option value="" selected>Select a Country
+                                                                </option>
+                                                                <option value="+965">+965 - Kuwait</option>
+                                                                <option value="+966">+966 - Saudi Arabia</option>
+                                                                <option value="+973">+973 - Bahrain</option>
+                                                                <option value="+971">+971 - United Arab Emirates
+                                                                </option>
+                                                                <option value="+974">+974 - Qatar</option>
+                                                                <option value="+968">+968 - Oman</option>
+                                                                <option value="+962">+962 - Jordan</option>
+                                                                <option value="+20">+20 - Egypt</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-8 mt-3 fatoorah-field">
+                                                            <label for="phone">Phone</label>
+                                                            <input type="text" class="form-control" id="phone"
+                                                                name="phone">
+                                                        </div>
+                                                        <div class="col-lg-12 mt-3 fatoorah-field">
+                                                            <label for="email">Email</label>
+                                                            <input type="email" class="form-control" id="email"
+                                                                name="email">
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @else
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="payment-method">
-                                                    <div class="order-button-payment mt-4">
-                                                        <a href="{{ $project['link'] }}" id="payment-button"
-                                                            class="tp-btn tp-color-btn w-100 banner-animation">Visit</a>
-                                                    </div>
+                                                <div class="order-button-payment mt-4">
+                                                    <button type="submit" {{-- id="payment-button" --}}
+                                                        class="tp-btn tp-color-btn w-100 banner-animation">Buy it
+                                                        now</button>
                                                 </div>
                                             </div>
-                                    @endif
-                                </div>
+                                        </form>
+                                    </div>
+                                @else
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="payment-method">
+                                            <div class="order-button-payment mt-4">
+                                                <a href="{{ $project['link'] }}"
+                                                    class="tp-btn tp-color-btn w-100 banner-animation">Visit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -617,112 +616,7 @@
         var get_stripe_publishable_key = "<?php echo get_stripe_public_key(); ?>";
     </script>
     <?php } ?>
-    <script>
-        var stripeButton = document.getElementById('payment-button');
-        stripeButton.addEventListener('click', function() {
-            processPayment();
-        });
 
-        function processPayment() {
-            var selectedOption = document.querySelector('input[name="options"]:checked').value;
-            if (selectedOption === "stripe") {
-                stripeFunction();
-            } else if (selectedOption === "fatoorah") {
-                fatoorahFunction();
-            }
-        }
-
-        function fatoorahFunction() {
-            $('#payment-button').attr('disabled', 'disabled');
-            var cname = $('#cname').val();
-            var email = $('#email').val();
-            var phone = $('#phone').val();
-            var countryCode = $('#countryCode').val();
-            $.ajax({
-                url: '{{ route('myfatoorah.invoice') }}',
-                type: 'POST',
-                data: {
-                    id: {{ $project->id }},
-                    cname: cname,
-                    email: email,
-                    phone: phone,
-                    countryCode: countryCode,
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    $('#payment-button').removeAttr('disabled');
-                    if (response.IsSuccess == "true") {
-                        downloadPDF(response.pdf_url);
-                        $.toast({
-                            heading: 'Success',
-                            text: response.Message,
-                            position: 'top-right',
-                            loaderBg: '#4CAF50',
-                            icon: 'success',
-                            hideAfter: 3000,
-                            stack: 6
-                        });
-                    } else {
-                        $.toast({
-                            heading: 'Something went wrong.',
-                            text: response.Message,
-                            position: 'top-right',
-                            loaderBg: '#3cb878',
-                            icon: 'error',
-                            hideAfter: 3000,
-                            stack: 6
-                        });
-                        console.log(response);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX error:', error);
-                    $('#payment-button').removeAttr('disabled');
-                }
-            });
-        }
-
-        function downloadPDF(pdfUrl) {
-            var anchor = document.createElement('a');
-            anchor.style.display = 'none';
-            document.body.appendChild(anchor);
-            anchor.href = pdfUrl;
-            anchor.download = 'invoice.pdf';
-            anchor.click();
-            document.body.removeChild(anchor);
-        }
-
-        function stripeFunction() {
-            var stripe = Stripe(get_stripe_publishable_key);
-            $('#payment-button').attr('disabled', 'disabled');
-            $.ajax({
-                url: '{{ route('create_session') }}',
-                type: 'POST',
-                data: {
-                    id: {{ $project['id'] }}
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    var response = JSON.parse(response);
-                    console.log(response);
-                    $('#payment-button').removeAttr('disabled');
-                    if (response.error != true) {
-                        return stripe.redirectToCheckout({
-                            sessionId: response.id
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX error:', error);
-                    $('#payment-button').removeAttr('disabled');
-                }
-            });
-        }
-    </script>
     <style>
         .visit_btn {
             color: black;
@@ -771,38 +665,38 @@
         </script>
     @endif
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOM loaded");
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     console.log("DOM loaded");
 
-            const stripeRadio = document.getElementById('option1');
-            const myFatoorahRadio = document.getElementById('option2');
-            const fatoorahFields = document.querySelectorAll('.fatoorah-field');
+        //     const stripeRadio = document.getElementById('option1');
+        //     const myFatoorahRadio = document.getElementById('option2');
+        //     const fatoorahFields = document.querySelectorAll('.fatoorah-field');
 
-            // Add event listener for Stripe radio button
-            stripeRadio.addEventListener('change', function() {
-                console.log("Stripe radio button clicked");
-                // Hide additional input fields for MyFatoorah
-                fatoorahFields.forEach(function(field) {
-                    field.style.display = 'none';
-                });
-            });
+        //     // Add event listener for Stripe radio button
+        //     stripeRadio.addEventListener('change', function() {
+        //         console.log("Stripe radio button clicked");
+        //         // Hide additional input fields for MyFatoorah
+        //         fatoorahFields.forEach(function(field) {
+        //             field.style.display = 'none';
+        //         });
+        //     });
 
-            // Add event listener for MyFatoorah radio button
-            myFatoorahRadio.addEventListener('change', function() {
-                console.log("MyFatoorah radio button clicked");
-                // Show additional input fields for MyFatoorah
-                fatoorahFields.forEach(function(field) {
-                    field.style.display = 'block';
-                });
-            });
+        //     // Add event listener for MyFatoorah radio button
+        //     myFatoorahRadio.addEventListener('change', function() {
+        //         console.log("MyFatoorah radio button clicked");
+        //         // Show additional input fields for MyFatoorah
+        //         fatoorahFields.forEach(function(field) {
+        //             field.style.display = 'block';
+        //         });
+        //     });
 
-            // Trigger change event to set the initial state
-            if (stripeRadio.checked) {
-                stripeRadio.dispatchEvent(new Event('change'));
-            } else if (myFatoorahRadio.checked) {
-                myFatoorahRadio.dispatchEvent(new Event('change'));
-            }
-        });
+        //     // Trigger change event to set the initial state
+        //     if (stripeRadio.checked) {
+        //         stripeRadio.dispatchEvent(new Event('change'));
+        //     } else if (myFatoorahRadio.checked) {
+        //         myFatoorahRadio.dispatchEvent(new Event('change'));
+        //     }
+        // });
     </script>
 
 
