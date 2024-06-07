@@ -137,7 +137,6 @@
             fetch("/get-privacy-policy?language=" + language)
                 .then(response => response.json())
                 .then(data => {
-
                     console.log(data.policy);
                     document.getElementById('policyContainer').innerHTML =  data.policy;
                 })

@@ -200,28 +200,6 @@
         </script>
 
         <script>
-            document.getElementById('privacyPolicyForm').addEventListener('submit', function(event) {
-                var selectedLanguage = document.getElementById('languageSelect').value;
-                var policy = document.getElementById('description_add').value;
-
-                localStorage.removeItem('saved_policy_selected_language');
-                localStorage.removeItem('last_saved_policy');
-
-                localStorage.setItem('saved_policy_selected_language', selectedLanguage);
-                localStorage.setItem('last_saved_policy', policy);
-            });
-
-            window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = localStorage.getItem('saved_policy_selected_language');
-                var policy = localStorage.getItem('last_saved_policy');
-                if (selectedLanguage && policy) {
-                    document.getElementById('languageSelect').value = selectedLanguage;
-                    document.getElementById('description_add').value = policy;
-                }
-            });
-        </script>
-
-        <script>
             function fetchPolicy(language) {
                 fetch("/get-privacy-policy?language=" + language)
                     .then(response => {
@@ -239,15 +217,15 @@
                     });
             }
 
-            // Add event listener for language select change
             document.getElementById('languageSelect').addEventListener('change', function() {
                 var selectedLanguage = this.value;
-                // Fetch policy content when the language select changes
                 fetchPolicy(selectedLanguage);
             });
 
-            // Fetch policy content when the page loads
-            fetchPolicy(document.getElementById('languageSelect').value);
+            window.addEventListener('DOMContentLoaded', function() {
+                var selectedLanguage = document.getElementById('languageSelect').value;
+                fetchPolicy(selectedLanguage);
+            });
         </script>
 
 

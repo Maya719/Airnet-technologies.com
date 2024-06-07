@@ -172,31 +172,11 @@
             });
         </script>
 
-        <script>
-            document.getElementById('terms_condition').addEventListener('submit', function(event) {
-                var selectedLanguage = document.getElementById('languageSelect').value;
-                var policy = document.getElementById('description_add').value;
 
-                localStorage.removeItem('saved_terms_condition_selected_language');
-                localStorage.removeItem('last_saved_terms_condition');
-
-                localStorage.setItem('saved_terms_condition_selected_language', selectedLanguage);
-                localStorage.setItem('last_saved_terms_condition', policy);
-            });
-
-            window.addEventListener('DOMContentLoaded', function() {
-                var selectedLanguage = localStorage.getItem('saved_terms_condition_selected_language');
-                var policy = localStorage.getItem('last_saved_terms_condition');
-                if (selectedLanguage && policy) {
-                    document.getElementById('languageSelect').value = selectedLanguage;
-                    document.getElementById('description_add').value = policy;
-                }
-            });
-        </script>
 
         <script>
             function fetchPolicy(language) {
-                fetch("/get-privacy-policy?language=" + language)
+                fetch("/get-terms-conditions?language=" + language)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -204,25 +184,24 @@
                         return response.json();
                     })
                     .then(data => {
-                        console.log('Fetched policy:', data.policy);
-                        tinymce.get('description_add').setContent(data.policy);
+                        console.log('Fetched policy:', data.terms_conditions);
+                        tinymce.get('description_add').setContent(data.terms_conditions);
                     })
                     .catch(error => {
                         console.error('Error fetching policy:', error);
                     });
             }
 
-            // Add event listener for language select change
             document.getElementById('languageSelect').addEventListener('change', function() {
                 var selectedLanguage = this.value;
-                // Fetch policy content when the language select changes
                 fetchPolicy(selectedLanguage);
             });
 
-            // Fetch policy content when the page loads
-            fetchPolicy(document.getElementById('languageSelect').value);
+            window.addEventListener('DOMContentLoaded', function() {
+                var selectedLanguage = document.getElementById('languageSelect').value;
+                fetchPolicy(selectedLanguage);
+            });
         </script>
-
 
 
 
