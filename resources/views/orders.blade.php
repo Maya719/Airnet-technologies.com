@@ -35,8 +35,6 @@
 
                                     <h5 class="text-center my-5">Orders</h5>
                                     {{-- {{ dd($get_orders) }} --}}
-
-
                                     <table class="table table-flush " id="orders_list">
                                         <thead>
                                             <tr>
