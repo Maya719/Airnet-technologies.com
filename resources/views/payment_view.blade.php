@@ -62,6 +62,29 @@
                                                     value="{{ $payment_methods['fatoorah_secret_key'] ?? '' }}">
                                             </div>
 
+                                            <div class="mb-3 my-5">
+                                                <label for="stripePrivateKey" class="form-label h5">Select Currency</label>
+                                                <select id="currency" class="form-select form-select-lg mb-3"
+                                                    aria-label=".form-select-lg example" name="currency" required>
+                                                    <option value="" selected>--</option>
+                                                    <option value="sar"
+                                                        {{ $payment_methods['currency']== 'sar' ? 'selected' : '' }}>Saudi Riyal
+                                                    </option>
+                                                    <option value="aed"
+                                                        {{ $payment_methods['currency']== 'aed' ? 'selected' : '' }}>United Arab Emirates Dirham
+                                                    </option>
+                                                    <option value="qar"
+                                                        {{ $payment_methods['currency']== 'qar' ? 'selected' : '' }}>Qatari Riyal
+                                                    </option>
+                                                    <option value="usd"
+                                                        {{ $payment_methods['currency']== 'usd' ? 'selected' : '' }}>United States Dollar
+                                                    </option>
+                                                    <option value="eur"
+                                                        {{ $payment_methods['currency']== 'eur' ? 'selected' : '' }}>Euro
+                                                    </option>
+                                                </select>
+                                            </div>
+
                                             <!-- Hidden input for the payment key ID if you're editing -->
                                             <input type="hidden" name="payment_key_id"
                                                 value="{{ $payment_key_id ?? '' }}">

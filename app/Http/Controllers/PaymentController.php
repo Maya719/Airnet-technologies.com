@@ -85,7 +85,7 @@ class PaymentController extends Controller
     public function get_payment_keys()
     {
 
-        $type = ['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key'];
+        $type = ['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key','currency'];
         $payment_methods = [];
 
         $settings = Setting::whereIn('type', $type)->get();
@@ -105,9 +105,7 @@ class PaymentController extends Controller
     {
 
         try {
-            $paymentKeys = $request->only(['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key']);
-
-
+            $paymentKeys = $request->only(['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key','currency']);
             foreach ($paymentKeys as $type => $value) {
                 $setting = Setting::updateOrCreate(['type' => $type], ['value' => $value]);
 
