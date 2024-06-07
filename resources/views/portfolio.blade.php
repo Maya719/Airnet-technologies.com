@@ -6,8 +6,9 @@
             role="tab" aria-controls="home-tab-pane" aria-selected="true">Peri</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button"
-            role="tab" aria-controls="profile-tab-pane" aria-selected="false">Web Development</button>
+        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+            type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Web
+            Development</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="ai_proj-tab" data-bs-toggle="tab" data-bs-target="#ai_proj-tab-pane" type="button"
@@ -20,7 +21,7 @@
 
 </ul>
 <div class="tab-content my-5" id="myTabContent">
-    {{-- all projects --}}
+    {{-- peri project --}}
     <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
 
@@ -36,9 +37,23 @@
                                     <h5 class="card-title fs-6">{{ $projects['title'] }} &nbsp;</h5>
                                 </a>
                                 <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
-                                    <p class="card-text truncate-multiline fs-6" id="description-{{ $projects['id'] }}">
-                                        AED {{ $projects['price'] }}
-                                    </p>
+
+                                    @if ($projects['price'] > 0)
+                                        <p class="card-text truncate-multiline fs-6"
+                                            id="description-{{ $projects['id'] }}">
+                                            {{ $projects['price'] }}
+                                        </p>
+                                    @elseif($projects['price'] <= 0)
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="payment-method">
+                                                <div class="order-button-payment btn btn-warning ">
+                                                    <a href="{{ $projects['link'] }}"  id="payment-button"
+                                                        class="tp-btn tp-color-btn w-100 banner-animation">Visit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
                                 </a>
                             </div>
                         </div>
@@ -67,7 +82,7 @@
                                 <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                     <p class="card-text truncate-multiline fs-6"
                                         id="description-{{ $projects['id'] }}">
-                                        AED {{ $projects['price'] }}
+                                        Price: &nbsp; AED {{ $projects['price'] }}
                                     </p>
                                 </a>
                             </div>
@@ -96,7 +111,7 @@
                                 <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                     <p class="card-text truncate-multiline fs-6"
                                         id="description-{{ $projects['id'] }}">
-                                        AED {{ $projects['price'] }}
+                                        Price: &nbsp; AED {{ $projects['price'] }}
                                     </p>
                                 </a>
                             </div>
@@ -129,7 +144,7 @@
                                 <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                     <p class="card-text truncate-multiline fs-6"
                                         id="description-{{ $projects['id'] }}">
-                                        AED {{ $projects['price'] }}
+                                        Price: &nbsp; AED {{ $projects['price'] }}
                                     </p>
                                 </a>
                             </div>
@@ -161,12 +176,13 @@
 
 <style>
     .project_description {
-        height: 28rem;
-        max-height: 34rem;
+        height: 22rem;
+        max-height: 24rem;
+
     }
 
     .project_img {
-        height: 22rem;
+        height: 18rem;
     }
 
     .truncate-multiline {
