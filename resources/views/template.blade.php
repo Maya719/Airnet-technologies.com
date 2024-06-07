@@ -133,9 +133,9 @@
                                         <span style="color: black; margin-end:20px;">For online payment.</span><a
                                             href="{{ $invoice->hosted_invoice_url }}"> Click Here</a>
                                     </div>
-                                    <div class="col-12" style="margin-top: -100px">
+                                    {{-- <div class="col-12" style="margin-top: -100px">
                                         {!! $simple !!}
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="invo-bill-total width-30">
