@@ -82,7 +82,7 @@
                                 <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                     <p class="card-text truncate-multiline fs-6"
                                         id="description-{{ $projects['id'] }}">
-                                        Price: &nbsp; AED {{ $projects['price'] }}
+                                        Price: &nbsp; {{strtoupper(get_currency())}} {{ $projects['price'] }}
                                     </p>
                                 </a>
                             </div>
@@ -111,7 +111,7 @@
                                 <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                     <p class="card-text truncate-multiline fs-6"
                                         id="description-{{ $projects['id'] }}">
-                                        Price: &nbsp; AED {{ $projects['price'] }}
+                                        Price: &nbsp; {{strtoupper(get_currency())}} {{ $projects['price'] }}
                                     </p>
                                 </a>
                             </div>
@@ -144,7 +144,7 @@
                                 <a href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                     <p class="card-text truncate-multiline fs-6"
                                         id="description-{{ $projects['id'] }}">
-                                        Price: &nbsp; AED {{ $projects['price'] }}
+                                        Price: &nbsp; {{strtoupper(get_currency())}} {{ $projects['price'] }}
                                     </p>
                                 </a>
                             </div>

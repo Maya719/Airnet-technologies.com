@@ -44,4 +44,7 @@ if (!function_exists('customFunction')) {
         $stripe_public_key = $existingSettings->value ;
         return $stripe_public_key;
     }
+    function get_currency(){
+        return 'usd';
+    }
 }

@@ -478,8 +478,7 @@
                                             @if ($project['price'] > 0)
                                                 <p>Price: &nbsp;</p>
                                                 <p>
-                                                    AED &nbsp;
-
+                                                    {{strtoupper(get_currency())}}
                                                     {{ $project['price'] }}
                                                 </p>
                                             @endif
@@ -664,43 +663,7 @@
             });
         </script>
     @endif
-    <script>
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     console.log("DOM loaded");
-
-        //     const stripeRadio = document.getElementById('option1');
-        //     const myFatoorahRadio = document.getElementById('option2');
-        //     const fatoorahFields = document.querySelectorAll('.fatoorah-field');
-
-        //     // Add event listener for Stripe radio button
-        //     stripeRadio.addEventListener('change', function() {
-        //         console.log("Stripe radio button clicked");
-        //         // Hide additional input fields for MyFatoorah
-        //         fatoorahFields.forEach(function(field) {
-        //             field.style.display = 'none';
-        //         });
-        //     });
-
-        //     // Add event listener for MyFatoorah radio button
-        //     myFatoorahRadio.addEventListener('change', function() {
-        //         console.log("MyFatoorah radio button clicked");
-        //         // Show additional input fields for MyFatoorah
-        //         fatoorahFields.forEach(function(field) {
-        //             field.style.display = 'block';
-        //         });
-        //     });
-
-        //     // Trigger change event to set the initial state
-        //     if (stripeRadio.checked) {
-        //         stripeRadio.dispatchEvent(new Event('change'));
-        //     } else if (myFatoorahRadio.checked) {
-        //         myFatoorahRadio.dispatchEvent(new Event('change'));
-        //     }
-        // });
-    </script>
-
-
-
+    
 </body>
 
 </html>

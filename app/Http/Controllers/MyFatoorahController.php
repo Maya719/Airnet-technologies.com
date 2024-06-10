@@ -17,7 +17,7 @@ class MyFatoorahController extends Controller
 {
 
     public $mfObj;
-
+    public $currency;
     //-----------------------------------------------------------------------------------------------------------------------------------------
 
     /**
@@ -26,11 +26,12 @@ class MyFatoorahController extends Controller
 
     public function __construct()
     {
+        $this->currency = get_currency();
         $type = 'fatoorah_secret_key';
         $existingSettings = Setting::where('type', $type)->first();
         $api_key = $existingSettings->value;
         $test_mode = true;
-        $country_iso = 'AED';
+        $country_iso = $this->currency;
 
         $this->mfObj = new PaymentMyfatoorahApiV2($api_key, $test_mode, $country_iso);
     }
@@ -58,8 +59,16 @@ class MyFatoorahController extends Controller
             $totalValue = $project->price;
             $curlData = $this->getPayLoadData($project->id, $project->title, $totalValue, $customerData["email"], $customerData["name"], $customerData["phone"], $customerData["countryCode"]);
             $data = $this->mfObj->getInvoiceURL($curlData, $paymentMethodId);
-            $urlWithoutPart = str_replace(env("MY_FATOORAH_URL"), '', $data["invoiceURL"]);
-            return redirect()->route('myfatoorah_invoice', ['project_id' => $project->id, 'invoice_id' => $data["invoiceId"], 'invoiceUrl' => $urlWithoutPart]);
+            $order = new OrderModel([
+                'product_id' => $project->id,
+                'invoice_id' => $data["invoiceId"],
+                'price' => $project->price,
+                'status' => 'pending',
+                'email' => $input['email'],
+                'invoice_url' => $data["invoiceURL"],
+            ]);
+            $order->save();
+            return redirect()->route('myfatoorah_invoice', ['order' => $order->id]);
         } catch (\Exception $e) {
             $response = ['IsSuccess' => 'false', 'Message' => $e->getMessage()];
             return response()->json($response);
@@ -81,7 +90,7 @@ class MyFatoorahController extends Controller
         return [
             'CustomerName'       => $cname,
             'InvoiceValue'       => $totalValue,
-            'DisplayCurrencyIso' => 'AED',
+            'DisplayCurrencyIso' => $this->currency,
             'CustomerEmail'      => $email,
             'CallBackUrl'        => $callbackURL,
             'ErrorUrl'           => $callbackURL,
@@ -108,13 +117,7 @@ class MyFatoorahController extends Controller
             $data = $this->mfObj->getPaymentStatus($paymentId, 'PaymentId');
             $product_id = $data->CustomerReference;
             $project = ProjectModel::find($product_id);
-            $order = new OrderModel([
-                'product_id' => $product_id,
-                'price' => $project->price,
-                'status' => $data->InvoiceStatus,
-                'email' => $data->CustomerEmail,
-            ]);
-            $order->save();
+
             $error = 'success';
             if ($data->InvoiceStatus == 'Paid') {
                 $msg = 'Invoice is paid successfull.';
@@ -134,24 +137,33 @@ class MyFatoorahController extends Controller
         }
     }
 
-    public function invoice($product_id, $invoice_id, $invoiceUrl)
+    public function invoice($order)
     {
-        $project = ProjectModel::find($product_id);
+        $order = OrderModel::find($order);
+        $project = ProjectModel::find($order->product_id);
         $KeyType = 'InvoiceId';
-        $invoiceDetails = $this->mfObj->getPaymentStatus($invoice_id, $KeyType);
+        $invoiceDetails = $this->mfObj->getPaymentStatus($order->invoice_id, $KeyType);
         $ExpiryDate = $invoiceDetails->ExpiryDate;
         $CustomerMobile = $invoiceDetails->CustomerMobile;
         $CustomerName = $invoiceDetails->CustomerName;
         $invoice = $invoiceDetails;
-        $invoice->customer_name = $CustomerName;
+        $invoice->id = $order->invoice_id;
         $invoice->customer_phone = $CustomerMobile;
         $invoice->due_date = strtotime($ExpiryDate);
         $invoice->customer_name = $CustomerName;
-        $invoiceUrl = env("MY_FATOORAH_URL") . $invoiceUrl;
-        $invoice->hosted_invoice_url = $invoiceUrl;
+        $invoice->customer_email  = $order->email;
+        $invoice->hosted_invoice_url = $order->invoice_url;
         $qrCodes = [];
-        $simple = QrCode::size(150)->generate($invoiceUrl);
-        return view('template', compact('invoice', 'project','simple'));
+        $simple = QrCode::size(150)->generate($order->invoice_url);
+        $imagePath = public_path('assets/fonts/sign.svg');
+        if (file_exists($imagePath)) {
+            $imageData = file_get_contents($imagePath);
+
+            $sign = base64_encode($imageData);
+        } else {
+            $sign = null;
+        }
+        return view('template', compact('order', 'invoice', 'project', 'simple', 'sign'));
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------
 }

@@ -60,7 +60,7 @@ Route::post('/myfatoorah/invoice', [MyFatoorahController::class, 'index'])->name
 
 // Route for handling MyFatoorah payment callback
 Route::post('/myfatoorah/callback', [MyFatoorahController::class, 'callback'])->name('myfatoorah.callback');
-Route::get('/invoice/{project_id}/{invoice_id}/{invoiceUrl}', [MyFatoorahController::class, 'invoice'])->name('myfatoorah_invoice');
+Route::get('/myfatoorah_invoice/{order}', [MyFatoorahController::class, 'invoice'])->name('myfatoorah_invoice');
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ================================================
