@@ -206,9 +206,13 @@ class PaymentController extends Controller
         $get_orders = OrderModel::all();
         $services = ProjectModel::join('order', 'projects.id', '=', 'order.product_id')
             ->select('projects.title', 'projects.id')
-            ->get();
+            ->get()
+            ->unique('title');
 
         $main_page = 'orders';
+
+        // dd($services);
+
 
         return view('orders', compact('get_orders', 'main_page', 'services'));
     }
@@ -222,15 +226,7 @@ class PaymentController extends Controller
         \Stripe\Stripe::setApiKey($stripeSecret);
         $invoice = \Stripe\Invoice::retrieve($invoice_id);
         $qrCodes = [];
-        $simple = QrCode::size(115)->generate($order->invoice_url);
-        $imagePath = public_path('assets/fonts/sign.svg');
-        if (file_exists($imagePath)) {
-            $imageData = file_get_contents($imagePath);
-
-            $sign = base64_encode($imageData);
-        } else {
-            $sign = null;
-        }
-        return view('template', compact('invoice', 'project', 'order', 'simple', 'sign'));
+        $simple = QrCode::size(150)->generate($order->invoice_url);
+        return view('template', compact('invoice', 'project', 'order_id','simple'));
     }
 }
