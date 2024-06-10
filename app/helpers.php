@@ -50,4 +50,5 @@ if (!function_exists('customFunction')) {
         $currency = $existingSettings->value ;
         return $currency;
     }
+    
 }
