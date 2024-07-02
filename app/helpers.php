@@ -50,5 +50,10 @@ if (!function_exists('customFunction')) {
         $currency = $existingSettings->value ;
         return $currency;
     }
-    
+  function get_bank_transaction(){
+        $type = 'bank_transaction';
+        $existingSettings = Setting::where('type', $type)->first();
+        $stripe_public_key = $existingSettings->value ;
+        return $stripe_public_key;
+    }
 }

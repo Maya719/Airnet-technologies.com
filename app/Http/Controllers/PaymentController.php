@@ -128,6 +128,7 @@ class PaymentController extends Controller
             $order->price = $project->price;
             $order->status = 'pending';
             $order->email = $input['email'];
+            $order->company_name = $input['company_name'];
             $order->invoice_url = $invoice->hosted_invoice_url;
             $order->invoice_pdf = $invoice->invoice_pdf;
             $order->save();
@@ -144,6 +145,7 @@ class PaymentController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|email',
+            'company_name' => 'required',
             'countryCode' => 'required',
             'phone' => 'required',
         ]);
@@ -163,42 +165,44 @@ class PaymentController extends Controller
             return view('redirect_to_post', ['route' => route('myfatoorah.invoice'), 'input' => $request->all()]);
         }
     }
-    public function get_payment_keys()
-    {
+public function get_payment_keys()
+{
+    $type = ['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key', 'currency', 'bank_transaction']; 
 
-        $type = ['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key','currency'];
+    $payment_methods = [];
+    $settings = Setting::whereIn('type', $type)->get();
+
+    if ($settings->isNotEmpty()) {
+        foreach ($settings as $setting) {
+            $payment_methods[$setting->type] = $setting->value;
+        }
+        return view('payment_view', ['payment_methods' => $payment_methods, 'main_page' => "Payments"]);
+    } else {
+        return view('payment_view', ['payment_failure' => "Payment Methods are Empty", 'main_page' => "Payments"]);
+    }
+}
+
+public function edit_payment_keys(Request $request)
+{
+    try {
+        $paymentKeys = $request->only(['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key', 'currency', 'bank_transaction']); 
+
         $payment_methods = [];
 
-        $settings = Setting::whereIn('type', $type)->get();
-        if ($settings->isNotEmpty()) {
-            foreach ($settings as $setting) {
+        foreach ($paymentKeys as $type => $value) {
+            $setting = Setting::updateOrCreate(['type' => $type], ['value' => $value]);
+            if ($setting) {
                 $payment_methods[$setting->type] = $setting->value;
+            } else {
+                return redirect()->back()->with('error', 'Failed to update payment keys');
             }
-            return view('payment_view', ['payment_methods' => $payment_methods, 'main_page' => "Payments"]);
-        } else {
-            return view('payment_view', ['payment_failure' => "Payment Methods are Empty", 'main_page' => "Payments"]);
         }
+
+        return redirect()->back()->with('success', 'Payment keys updated successfully!');
+    } catch (\Throwable $th) {
+        return redirect()->back()->with('error', 'Failed to update payment keys');
     }
-
-    public function edit_payment_keys(Request $request)
-    {
-        try {
-            $paymentKeys = $request->only(['stripe_public_key', 'stripe_secret_key', 'fatoorah_secret_key','currency']);
-            foreach ($paymentKeys as $type => $value) {
-                $setting = Setting::updateOrCreate(['type' => $type], ['value' => $value]);
-
-                if ($setting) {
-                    $payment_methods[$setting->type] = $setting->value;
-                } else {
-                    return redirect()->back()->with('error', 'Failed to update payment keys');
-                }
-            }
-
-            return redirect()->back()->with('success', 'Payment keys updated successfully!');
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Failed to update payment keys');
-        }
-    }
+}
 
 
     public function get_orders()
@@ -210,9 +214,6 @@ class PaymentController extends Controller
             ->unique('title');
 
         $main_page = 'orders';
-
-        // dd($services);
-
 
         return view('orders', compact('get_orders', 'main_page', 'services'));
     }
@@ -227,6 +228,6 @@ class PaymentController extends Controller
         $invoice = \Stripe\Invoice::retrieve($invoice_id);
         $qrCodes = [];
         $simple = QrCode::size(150)->generate($order->invoice_url);
-        return view('template', compact('invoice', 'project', 'order_id','simple'));
+        return view('template', compact('invoice', 'project', 'order','simple'));
     }
 }

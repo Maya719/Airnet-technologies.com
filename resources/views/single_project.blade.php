@@ -259,6 +259,10 @@
     {{-- jquery toast cdn --}}
     <link href="{{ asset('assets/css/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('assets/js/jquery.toast.min.js') }}"></script>
+    {{-- google reCaptcha --}}
+
+    <!-- Include script -->
+    {!! htmlScriptTagJsApi() !!}
     <style>
         .radio-input {
             display: none;
@@ -478,7 +482,7 @@
                                             @if ($project['price'] > 0)
                                                 <p>Price: &nbsp;</p>
                                                 <p>
-                                                    {{strtoupper(get_currency())}}
+                                                    {{ strtoupper(get_currency()) }} &nbsp;
                                                     {{ $project['price'] }}
                                                 </p>
                                             @endif
@@ -533,6 +537,11 @@
                                                             <label for="cname">Last Name</label>
                                                             <input type="text" class="form-control" id="lastname"
                                                                 name="lastname">
+                                                        </div>
+                                                        <div class="col-lg-12 mt-3 fatoorah-field">
+                                                            <label for="company_name">Company Name</label>
+                                                            <input type="text" class="form-control" id="company_name"
+                                                                name="company_name">
                                                         </div>
                                                         <div class="col-lg-4 mt-3 fatoorah-field">
                                                             <label for="countryCode">Country</label>
@@ -589,6 +598,119 @@
             </section>
             <!-- project details area end -->
         </section>
+
+<!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+            <div class="container">
+
+                <div class="section-title">
+                    <span>Contact</span>
+                    <h2>Contact</h2>
+                    <p>
+
+                    </p>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12 d-flex align-items-stretch">
+                        <div class="info">
+                            <div class="information">
+                                {{-- <div class="address">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <h4>Location:</h4>
+                                    <p>A108 Adam Street, New York, NY 535022</p>
+                                </div> --}}
+
+                                <div class="email">
+                                    <i class="bi bi-envelope"></i>
+                                    <h4>Email:</h4>
+                                    <p>
+                                        <a href="mailto:ag.rana@airnet-technologies.com">
+                                            ag.rana@airnet-technologies.com
+                                        </a>
+                                    </p>
+                                </div>
+
+                                <div class="phone">
+                                    <i class="bi bi-phone"></i>
+                                    <h4>Call:</h4>
+                                    <p>
+                                        <a href="tel:+971561283088">+971 561 283088</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-container">
+                                <form action="{{ route('contact_message') }}" id="contact-form" method="post">
+                                    @csrf
+                                    <div class="row ">
+                                        <div class="form-group col-md-6">
+                                            <label for="name">Your Name</label>
+                                            <input type="text" name="name" class="form-control" id="name" required>
+                                        </div>
+                                        <div class="form-group col-md-6 mt-3 mt-md-0">
+                                            <label for="name">Your Email</label>
+                                            <input type="email" class="form-control" name="email" id="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="name">Subject</label>
+                                        <input type="text" class="form-control" name="subject" id="subject" required>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="name">Message</label>
+                                        <textarea class="form-control" name="message" rows="10" required></textarea>
+                                    </div>
+                                    <br>
+
+
+                                    <!-- Google reCaptcha v2 -->
+                                    {!! htmlFormSnippet() !!}
+
+                                    @if ($errors->has('g-recaptcha-response'))
+                                    <div>
+                                        <small class="text-danger">{{ $errors->first('g-recaptcha-response') }}</small>
+                                    </div>
+                                    @endif
+
+                                    <br>
+
+                                    @if (session('success'))
+                                    <script>
+                                        $.toast({
+                                            heading: 'Success',
+                                            text: "Message Send Sucessfully",
+                                            showHideTransition: 'slide',
+                                            position: 'top-right',
+                                            icon: 'success'
+                                        })
+                                    </script>
+                                    @elseif(session('captcha_error'))
+                                    <script>
+                                        $.toast({
+                                            heading: 'Error',
+                                            text: "Invalid Captcha",
+                                            showHideTransition: 'slide',
+                                            position: 'top-right',
+                                            icon: 'error'
+                                        })
+                                    </script>
+                                    @endif
+
+
+                                    <div class="text-center"><button class="btn-submit" type="submit">
+                                            Send
+                                            Message</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+        </section>
+        <!-- End Contact Section -->
     </main>
     <footer>
         @include('footer')
@@ -663,7 +785,43 @@
             });
         </script>
     @endif
-    
+    <script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     console.log("DOM loaded");
+
+        //     const stripeRadio = document.getElementById('option1');
+        //     const myFatoorahRadio = document.getElementById('option2');
+        //     const fatoorahFields = document.querySelectorAll('.fatoorah-field');
+
+        //     // Add event listener for Stripe radio button
+        //     stripeRadio.addEventListener('change', function() {
+        //         console.log("Stripe radio button clicked");
+        //         // Hide additional input fields for MyFatoorah
+        //         fatoorahFields.forEach(function(field) {
+        //             field.style.display = 'none';
+        //         });
+        //     });
+
+        //     // Add event listener for MyFatoorah radio button
+        //     myFatoorahRadio.addEventListener('change', function() {
+        //         console.log("MyFatoorah radio button clicked");
+        //         // Show additional input fields for MyFatoorah
+        //         fatoorahFields.forEach(function(field) {
+        //             field.style.display = 'block';
+        //         });
+        //     });
+
+        //     // Trigger change event to set the initial state
+        //     if (stripeRadio.checked) {
+        //         stripeRadio.dispatchEvent(new Event('change'));
+        //     } else if (myFatoorahRadio.checked) {
+        //         myFatoorahRadio.dispatchEvent(new Event('change'));
+        //     }
+        // });
+    </script>
+
+
+
 </body>
 
 </html>

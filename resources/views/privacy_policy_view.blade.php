@@ -84,7 +84,7 @@
 
         <div class="container privacy_policy">
             <div class="row">
-                <div class="col-sm-12">
+                 <div class="col-sm-12">
                     <p class="text-center h4 language_cont flex-container">
                         <span class="policy-text">Privacy Policy</span>
                         <span class="dropdown">
@@ -137,6 +137,7 @@
             fetch("/get-privacy-policy?language=" + language)
                 .then(response => response.json())
                 .then(data => {
+
                     console.log(data.policy);
                     document.getElementById('policyContainer').innerHTML =  data.policy;
                 })
@@ -147,6 +148,29 @@
 
         fetchPolicy(document.getElementById('languageSelect').value);
     </script>
+  
+     <script>
+            document.getElementById('privacyPolicyForm').addEventListener('submit', function(event) {
+                var selectedLanguage = document.getElementById('languageSelect').value;
+                var policy = document.getElementById('description_add').value;
+
+                localStorage.removeItem('saved_policy_selected_language');
+                localStorage.removeItem('last_saved_policy');
+
+                localStorage.setItem('saved_policy_selected_language', selectedLanguage);
+                localStorage.setItem('last_saved_policy', policy);
+            });
+
+            window.addEventListener('DOMContentLoaded', function() {
+                var selectedLanguage = localStorage.getItem('saved_policy_selected_language');
+                var policy = localStorage.getItem('last_saved_policy');
+                if (selectedLanguage && policy) {
+                    document.getElementById('languageSelect').value = selectedLanguage;
+                    document.getElementById('description_add').value = policy;
+                }
+            });
+        </script>
+
 
 
 

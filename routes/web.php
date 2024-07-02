@@ -40,11 +40,6 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 Route::get('/blog-description/{blog_id}', [Main_Controller::class, 'load_blog_description'])->name('blog-description');
 
 
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Payment Route
 Route::post('/create_invoice', [PaymentController::class, 'create_invoice'])->name('create_invoice');
@@ -62,7 +57,6 @@ Route::post('/myfatoorah/invoice', [MyFatoorahController::class, 'index'])->name
 Route::post('/myfatoorah/callback', [MyFatoorahController::class, 'callback'])->name('myfatoorah.callback');
 Route::get('/myfatoorah_invoice/{order}', [MyFatoorahController::class, 'invoice'])->name('myfatoorah_invoice');
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // ================================================
 //
 //
@@ -74,12 +68,11 @@ Route::get('/myfatoorah_invoice/{order}', [MyFatoorahController::class, 'invoice
 
 
 
-Route::get('/', [Main_Controller::class, 'index'])->name('home');
+Route::get('/home', [Main_Controller::class, 'index'])->name('home');
 
 Route::get('/home-about', [Main_Controller::class, 'index'])->name('about');
 
 Route::get('/home-services', [Main_Controller::class, 'index'])->name('services');
-
 Route::get('/home-technologies', [Main_Controller::class, 'index'])->name('technologies');
 
 
@@ -92,8 +85,8 @@ Route::get('/home-blogs', [Main_Controller::class, 'index'])->name('blog');
 Route::get('/home-contact', [Main_Controller::class, 'index'])->name('contact');
 
 
-Route::get('/privacy-policy', [Main_Controller::class, 'privacy_policy'])->name('privacy_policy_view');
 
+Route::get('/privacy-policy', [Main_Controller::class, 'privacy_policy'])->name('privacy_policy_view');
 Route::get('/get-privacy-policy', [Main_Controller::class, 'get_privacy_policy'])->name('get-privacy_policy_view');
 
 Route::get('/refund-policy', [Main_Controller::class, 'refund_policy'])->name('refund_policy_view');
@@ -101,16 +94,7 @@ Route::get('/get-refund-policy', [Main_Controller::class, 'get_refund_policy'])-
 
 
 Route::get('/terms-conditions', [Main_Controller::class, 'terms_conditions'])->name('terms_conditions_view');
-Route::get('/get-terms-conditions', [Main_Controller::class, 'get_terms_conditions'])->name('get-terms-conditions_view');
-
-
-
-
-
-
-
-
-
+Route::get('/get-terms-conditions', [Main_Controller::class, 'get_terms_conditions'])->name('get-terms-conditions');
 
 
 /*
@@ -152,7 +136,6 @@ Route::post('/payments', [PaymentController::class, 'edit_payment_keys'])
 Route::get('/dashboard-orders', [PaymentController::class, 'get_orders'])
     ->middleware(['auth', 'verified'])
     ->name('get_orders');
-
 //   projects
 Route::get('/projects', [ProjectController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -193,6 +176,7 @@ Route::get('/get_member_by_id', [TeamController::class, 'get_member_by_id'])
 Route::post('/update_member', [TeamController::class, 'update'])
     ->middleware(['auth', 'verified'])
     ->name('update_member');
+
 
 
 
@@ -244,8 +228,7 @@ Route::post('/save_logo', [DashboardController::class, 'save_logo'])
     ->name('save_logo');
 
 
-// privacy_policy
-
+// privacy policy
 Route::get('/privacy_policy', [DashboardController::class, 'privacy_policy'])
     ->middleware(['auth', 'verified'])
     ->name('privacy_policy');
@@ -274,5 +257,6 @@ Route::get('/dashboard-refund-policy', [DashboardController::class, 'refund_poli
 Route::post('/store-refund-policy', [DashboardController::class, 'save_refund_policy'])
     ->middleware(['auth', 'verified'])
     ->name('save_refund_policy');
+
 
 require __DIR__ . '/auth.php';

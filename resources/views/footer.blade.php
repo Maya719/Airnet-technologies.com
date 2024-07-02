@@ -51,7 +51,7 @@
                 <div class="">
                     <a class="nav-link scrollto " href="{{ route('privacy_policy_view') }}">- Privacy Policy</a>
                     <a class="nav-link scrollto " href="{{ route('refund_policy_view') }}">- Refund Policy</a>
-                    <a class="nav-link scrollto " href="{{ route('terms_conditions_view') }}">- Terms & Conditon</a>
+                    <a class="nav-link scrollto " href="{{ route('terms_conditions_view') }}">- Terms & Conditions</a>
                 </div>
             </div>
         </div>

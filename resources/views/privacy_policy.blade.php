@@ -67,7 +67,8 @@
                                 <div class="table-responsive py-4">
 
 
-                                    {{-- <form id="privacyPolicyForm" method="POST"
+
+  									<form id="privacyPolicyForm" method="POST"
                                         action="{{ route('save_privacy_policy') }}">
                                         @csrf
                                         <fieldset>
@@ -89,36 +90,6 @@
                                             <div class="mb-3 my-5">
                                                 <label>Privacy Policy <span class="text-danger">*</span></label>
                                                 <textarea class="form-control" id="description_add" name="policy" required>{{ $last_saved_policy }}</textarea>
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary my-5">Submit</button>
-                                        </fieldset>
-                                    </form> --}}
-
-
-
-                                    <form id="privacyPolicyForm" method="POST"
-                                        action="{{ route('save_privacy_policy') }}">
-                                        @csrf
-                                        <fieldset>
-                                            <legend class="text-center">Privacy Policy</legend>
-                                            <br>
-                                            <div class="mb-3 my-5">
-                                                <label>Select Language <span class="text-danger">*</span></label>
-                                                <select id="languageSelect" class="form-select form-select-lg mb-3"
-                                                    aria-label=".form-select-lg example" name="language" required>
-                                                    <option value="english"
-                                                        {{ $selected_language == 'english' ? 'selected' : '' }}>English
-                                                    </option>
-                                                    <option value="arabic"
-                                                        {{ $selected_language == 'arabic' ? 'selected' : '' }}>Arabic
-                                                    </option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mb-3 my-5">
-                                                <label>Privacy Policy <span class="text-danger">*</span></label>
-                                                <textarea class="form-control" id="description_add" name="policy" value="" required>{{ $last_saved_policy }}</textarea>
                                             </div>
 
                                             <button type="submit" class="btn btn-primary my-5">Submit</button>
@@ -199,7 +170,31 @@
             });
         </script>
 
-        <script>
+      
+       <script>
+            document.getElementById('privacyPolicyForm').addEventListener('submit', function(event) {
+                var selectedLanguage = document.getElementById('languageSelect').value;
+                var policy = document.getElementById('description_add').value;
+
+                localStorage.removeItem('saved_policy_selected_language');
+                localStorage.removeItem('last_saved_policy');
+
+                localStorage.setItem('saved_policy_selected_language', selectedLanguage);
+                localStorage.setItem('last_saved_policy', policy);
+            });
+
+            window.addEventListener('DOMContentLoaded', function() {
+                var selectedLanguage = localStorage.getItem('saved_policy_selected_language');
+                var policy = localStorage.getItem('last_saved_policy');
+                if (selectedLanguage && policy) {
+                    document.getElementById('languageSelect').value = selectedLanguage;
+                    document.getElementById('description_add').value = policy;
+                }
+            });
+        </script>
+        
+      
+   <script>
             function fetchPolicy(language) {
                 fetch("/get-privacy-policy?language=" + language)
                     .then(response => {
@@ -227,6 +222,8 @@
                 fetchPolicy(selectedLanguage);
             });
         </script>
+
+
 
 
 

@@ -30,10 +30,13 @@ class MyFatoorahController extends Controller
         $type = 'fatoorah_secret_key';
         $existingSettings = Setting::where('type', $type)->first();
         $api_key = $existingSettings->value;
-        $test_mode = true;
-        $country_iso = $this->currency;
 
-        $this->mfObj = new PaymentMyfatoorahApiV2($api_key, $test_mode, $country_iso);
+        $test_mode = 'live';
+        #$country_iso = $this->currency;
+        $country_iso = 'ARE';
+
+        $this->mfObj = new PaymentMyfatoorahApiV2($api_key, $test_mode);
+     
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------
@@ -49,26 +52,36 @@ class MyFatoorahController extends Controller
         $input = $request->all();
         $project = ProjectModel::find($input["id"]);
         $customerData = [
-            'name' => $input['firstname'] . ' ' . $input['lastname'],
+            'name' => $input['firstname']. ' '. $input["lastname"],
             'email' => $input['email'],
+            'company_name' => $input['company_name'],
             'phone' =>  $input['phone'],
             'countryCode' =>  $input['countryCode'],
         ];
+   
         try {
             $paymentMethodId = 0;
             $totalValue = $project->price;
-            $curlData = $this->getPayLoadData($project->id, $project->title, $totalValue, $customerData["email"], $customerData["name"], $customerData["phone"], $customerData["countryCode"]);
-            $data = $this->mfObj->getInvoiceURL($curlData, $paymentMethodId);
-            $order = new OrderModel([
+            
+          $curlData = $this->getPayLoadData($project->id, $project->title, $totalValue, $customerData["email"], $customerData["name"], $customerData["phone"], $customerData["countryCode"]);
+
+          $data = $this->mfObj->getInvoiceURL($curlData,$paymentMethodId);
+
+       
+
+
+             $order = new OrderModel([
                 'product_id' => $project->id,
                 'invoice_id' => $data["invoiceId"],
                 'price' => $project->price,
                 'status' => 'pending',
                 'email' => $input['email'],
+                'company_name' => $input['company_name'],
                 'invoice_url' => $data["invoiceURL"],
             ]);
-            $order->save();
-            return redirect()->route('myfatoorah_invoice', ['order' => $order->id]);
+            $order->save();  
+          
+          return redirect()->route('myfatoorah_invoice', ['order' => $order->id]);
         } catch (\Exception $e) {
             $response = ['IsSuccess' => 'false', 'Message' => $e->getMessage()];
             return response()->json($response);

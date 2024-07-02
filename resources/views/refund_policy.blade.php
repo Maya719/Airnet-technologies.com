@@ -85,10 +85,15 @@
                                                     </option>
                                                 </select>
 
+
+
+
+
                                             </div>
 
                                             <div class="mb-3 my-5">
                                                 <label>Privacy Policy <span class="text-danger">*</span></label>
+                                                {{-- <textarea class="form-control" id="description_add" name="refund_policy" required>{{ $last_saved_policy }}</textarea> --}}
                                                 <textarea class="form-control" id="description_add" name="refund_policy" required></textarea>
                                             </div>
 
@@ -172,9 +177,7 @@
 
 
 
-
-
-        <script>
+		   <script>
             function fetchPolicy(language) {
                 fetch("/get-refund-policy?language=" + language)
                     .then(response => {
@@ -203,6 +206,8 @@
                 fetchPolicy(selectedLanguage);
             });
         </script>
+
+
 
 
 

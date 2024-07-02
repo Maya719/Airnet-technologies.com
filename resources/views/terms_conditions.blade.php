@@ -85,13 +85,22 @@
                                                     </option>
                                                 </select>
 
-
+                                                {{-- <select id="languageSelect" class="form-select form-select-lg mb-3"
+                                                    aria-label=".form-select-lg example" name="language" required>
+                                                    <option value="english">
+                                                        English
+                                                    </option>
+                                                    <option value="arabic">
+                                                        Arabic
+                                                    </option>
+                                                </select> --}}
 
                                             </div>
 
                                             <div class="mb-3 my-5">
                                                 <label>Privacy Policy <span class="text-danger">*</span></label>
                                                 <textarea class="form-control" id="description_add" name="terms_conditions" required>{{ $last_saved_policy }}</textarea>
+                                                {{-- <textarea class="form-control" id="description_add" name="terms_conditions" required></textarea> --}}
                                             </div>
 
                                             <button type="submit" class="btn btn-primary my-5">Submit</button>
@@ -172,9 +181,9 @@
             });
         </script>
 
-
-
-        <script>
+       
+      
+         <script>
             function fetchPolicy(language) {
                 fetch("/get-terms-conditions?language=" + language)
                     .then(response => {
@@ -202,6 +211,7 @@
                 fetchPolicy(selectedLanguage);
             });
         </script>
+
 
 
 

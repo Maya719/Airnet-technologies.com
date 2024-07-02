@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("status");
             $table->string("price");
             $table->string("email");
+            $table->string("company_name");
             $table->timestamps();
         });
     }

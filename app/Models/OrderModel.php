@@ -9,6 +9,6 @@ class OrderModel extends Model
 {
     use HasFactory;
     protected $table ='order';
-    protected $fillable = ['product_id', 'invoice_id','status', 'price','email','invoice_url','invoice_pdf'];
+    protected $fillable = ['product_id', 'invoice_id','status', 'price','email','company_name','invoice_url','invoice_pdf'];
     public $timestamps = true;
 }

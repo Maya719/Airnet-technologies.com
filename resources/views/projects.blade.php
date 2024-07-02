@@ -51,10 +51,10 @@
     }
 
     .text-blk.headingText {
-        font-size: 18px;
-        font-weight: bold;
+        font-size: 1.1rem;
+        font-weight: 700;
         line-height: 34px;
-        color:rgb(235, 195, 51);
+        color: rgba(252,209,92,255);
         padding-top: 0px;
         padding-right: 10px;
         padding-bottom: 0px;
@@ -92,22 +92,7 @@
         margin-bottom: 15px;
         margin-left: 0px;
     }
-
-    .text-blk.description {
-        font-size: 25px;
-        line-height: 34px;
-        color: rgb(102, 102, 102);
-        margin-top: 0px;
-        margin-right: 0px;
-        margin-bottom: 50px;
-        margin-left: 0px;
-        padding-top: 0px;
-        padding-right: 10px;
-        padding-bottom: 0px;
-        padding-left: 10px;
-    }
-
-    .description_container {
+  .description_container {
         overflow: auto;
         max-height: 25rem;
         scrollbar-width: thin;
@@ -156,6 +141,20 @@
         align-items: center;
     }
 
+    .text-blk.description {
+        font-size: 25px;
+        line-height: 34px;
+        color: rgb(102, 102, 102);
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 50px;
+        margin-left: 0px;
+        padding-top: 0px;
+        padding-right: 10px;
+        padding-bottom: 0px;
+        padding-left: 10px;
+    }
+
     .explore {
         font-size: 20px;
         line-height: 28px;
@@ -183,7 +182,6 @@
         border-image-outset: initial;
         border-image-repeat: initial;
         cursor: pointer;
-        text-align: center;
     }
 
     .explore:hover {
@@ -435,9 +433,9 @@
                                                         {{ $project->title }}
                                                     </p>
                                                     <p class="text-blk description">
-                                                    <div class="description_container">
+                                                       <div class="description_container">
                                                         {!! $project->description !!}
-                                                    </div>
+                                                       </div>
                                                     </p>
                                                     @if ($project->price)
                                                         <div class="price_cont">
@@ -447,7 +445,7 @@
                                                             <p>AED {{ $project->price }}</p>
                                                         </div>
                                                     @endif
-                                                    <div class="edit_btn_cont">
+                                                   <div class="edit_btn_cont">
                                                         <button class="explore" id="project-link"
                                                             onclick="edit_link(this)" data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal"
@@ -468,7 +466,7 @@
                                                     <p class="text-blk subHeadingText">
                                                         {{ $project->title }}
                                                     </p>
-                                                    <p class="text-blk description">
+                                                     <p class="text-blk description">
                                                     <div class="description_container">
                                                         {!! $project->description !!}
                                                     </div>
@@ -543,7 +541,7 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body pb-3">
-                                        <label>Title <span class="text-danger">*</span></label>
+                                        <label>Title</label>
                                         <div class="input-group mb-3">
                                             <input name="title" type="text" class="form-control" aria-label="title"
                                                 aria-describedby="title-addon">
@@ -559,7 +557,7 @@
                                             <input type="number" min="0" class="form-control" name="price"
                                                 placeholder="$">
                                         </div>
-                                        <label>Project Category <span class="text-danger">*</span></label>
+                                        <label>Project Category</label>
                                         <div class="input-group mb-3">
                                             <select class="form-select" name="category" aria-label="category"
                                                 aria-describedby="email-addon">
@@ -567,11 +565,11 @@
                                                 <option value="Web">Web Development</option>
                                                 <option value="Ai">Artificial intelligence</option>
                                                 <option value="App">Application Development</option>
-                                                <option value="plan">Plan Service</option>
+                                                <option value="plan">Plan Saling</option>
                                             </select>
                                         </div>
                                         <input type="hidden" name="categoryInput">
-                                        <label>Thumbnail/Image <span class="text-danger">*</span></label>
+                                        <label>Thumbnail/Image</label>
                                         <div class="input-group mb-3">
                                             <div class="fallback">
                                                 <div class="custom-file">
@@ -580,7 +578,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <label>Description <span class="text-danger">*</span></label>
+                                        <label>Description</label>
                                         <textarea class="form-control" id="description_add" name="description"></textarea>
                                     </div>
                                     <div class="card-footer text-center pt-0 px-sm-4 px-1">
@@ -599,7 +597,7 @@
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="font-weight-bolder text-primary text-gradient">Edit Project</h4>
@@ -613,7 +611,7 @@
                                 <div class="card-body pb-3">
                                     <input name="update_id" type="hidden" class="form-control" id="update_id"
                                         aria-label="update_id" aria-describedby="update_id-addon">
-                                    <label>Title <span class="text-danger">*</span></label>
+                                    <label>Title</label>
                                     <div class="input-group mb-3">
                                         <input name="title" type="text" class="form-control" id="title"
                                             aria-label="title" aria-describedby="title-addon">
@@ -631,20 +629,19 @@
                                         <input type="number" min="0" id="price" class="form-control"
                                             name="price" placeholder="$">
                                     </div>
-                                    <label>Project Category <span class="text-danger">*</span></label>
+                                    <label>Project Category</label>
                                     <div class="input-group mb-3">
                                         <select class="form-select" id="categorySelect" name="category"
                                             aria-label="category" aria-describedby="email-addon">
                                             <option value="" selected disabled>Select an option</option>
-                                            <option value="Web">Web Development</option>
-                                            <option value="Ai">Artificial intelligence</option>
-                                            <option value="App">Application Development</option>
-                                            <option value="plan">Plan Service</option>
+                                            <option value="Web">Web</option>
+                                            <option value="Ai">Ai</option>
+                                            <option value="App">App</option>
                                         </select>
                                     </div>
 
                                     <input type="hidden" id="categoryInput" name="categoryInput">
-                                    <label>Thumbnail/Image <span class="text-danger">*</span></label>
+                                    <label>Thumbnail/Image</label>
                                     <div class="input-group mb-3">
                                         <div class="fallback">
                                             <div class="custom-file">
@@ -653,7 +650,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label>Description <span class="text-danger">*</span></label>
+                                    <label>Description</label>.
                                     <textarea name="description" id="description"></textarea>
                                 </div>
                                 <div class="card-footer text-end pt-0 px-sm-4 px-1">

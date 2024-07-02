@@ -129,6 +129,9 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
 
+
+  
+
     <script>
         document.getElementById('languageSelect').addEventListener('change', function() {
             var selectedLanguage = this.value;
@@ -150,6 +153,8 @@
 
         fetchPolicy(document.getElementById('languageSelect').value);
     </script>
+  
+  
 
 </body>
 

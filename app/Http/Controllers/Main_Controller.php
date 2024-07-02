@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogs;
-use App\Models\privacy_policy;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use App\Models\ProjectModel;
-use App\Models\RefundPolicy;
+use App\Models\privacy_policy;
 use App\Models\TermsConditions;
+use App\Models\RefundPolicy;
 
 class Main_Controller extends Controller
 {
@@ -29,10 +29,11 @@ class Main_Controller extends Controller
         } catch (\Throwable $th) {
             dd('Error in connecting with Database. Try again to connect with Database', $th->getMessage());
         }
-
-        try {
+      
+       try {
             $projects = ProjectModel::all();
             $more_projects =  $projects->toArray();
+
         } catch (\Throwable $th) {
             dd('Error in connecting with Database. Try again to connect with Database', $th->getMessage());
         }
@@ -41,10 +42,10 @@ class Main_Controller extends Controller
 
         $limited_blogs = array_slice($more_blogs, 0, 3);
         $limited_team_members = array_slice($team_member, 0, 3);
-        //$all_projects = array_slice($more_projects, 0, 3);
+		//$all_projects = array_slice($more_projects, 0, 3);
         $all_projects = $more_projects;
-
-        return view("index", compact('limited_blogs', 'limited_team_members', 'mailFromAddress', 'all_projects'));
+      
+        return view("index", compact('limited_blogs', 'limited_team_members', 'mailFromAddress','all_projects'));
     }
 
     function load_blog_description($blog_id)
@@ -63,8 +64,8 @@ class Main_Controller extends Controller
             abort(404);
         }
     }
-
-    public function privacy_policy()
+  
+   public function privacy_policy()
     {
         // Return HTML response
         return view('privacy_policy_view');
@@ -80,10 +81,8 @@ class Main_Controller extends Controller
         // Return HTML response
         return response()->json(['policy' => $policy ? $policy->policy : '']);
     }
-
-
-
-    public function refund_policy(Request $request)
+  
+  public function refund_policy(Request $request)
     {
         // frontend view
         return view('refund_policy_view');
@@ -99,10 +98,9 @@ class Main_Controller extends Controller
         return response()->json(['refund_policy' => $refund_policy ? $refund_policy->refund_policy : '']);
     }
 
+    
 
-
-
-    public function terms_conditions(Request $request)
+  public function terms_conditions(Request $request)
     {
         // frontend view
         return view('terms_conditions_view');

@@ -34,7 +34,37 @@
     {{-- jquery toast cdn --}}
     <link href="{{ asset('assets/css/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('assets/js/jquery.toast.min.js') }}"></script>
+    <style>
+        .price_cont {
 
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            font-size: 12px;
+            color: #333;
+
+            margin: 0.8rem 0;
+
+        }
+
+        .price_cont p {
+            margin: 0;
+        }
+
+        .price_cont p:first-child {
+            margin-right: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .price_cont p:last-child {
+            font-weight: bold;
+            font-size: 1rem;
+            background: linear-gradient(to right, #007bff, #093768);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 
 </head>
 
@@ -95,7 +125,7 @@
 
                 </ul>
                 <div class="tab-content my-5" id="myTabContent">
-                    {{-- peri  projects --}}
+                    {{-- all projects --}}
                     <div class="tab-pane fade show active " id="home-tab-pane" role="tabpanel"
                         aria-labelledby="home-tab" tabindex="0">
                         <div class="row gy-4  d-flex justify-content-center align-items-center">
@@ -120,21 +150,25 @@
                                                             </span>
                                                         </h5>
                                                     </a>
-                                                    {{-- <a href="{{ route('single_projects', ['id' => $projects['id']]) }}"
-                                                    class="description-container">
-                                                    {!! $projects['description'] !!}
-                                                </a> --}}
-
                                                     <div class="description-container">
-                                                        <a
+                                                        <a class="text-dark"
                                                             href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                                             {!! $projects['description'] !!}
                                                         </a>
                                                     </div>
-                                                    <button class="read-more-button">Read More</button>
-
-
-
+                                                    <div class="d-flex">
+                                                        <button class="read-more-button">Read More</button>
+                                                        <a href="{{ route('single_projects', ['id' => $projects['id']]) }}" style="color:#ffffff;" class="buy-now ms-3">Buy Now</a>
+                                                        <div class="price_cont ms-auto">
+                                                            @if ($projects['price'] > 0)
+                                                                <p>Price: &nbsp;</p>
+                                                                <p>
+                                                                    {{ strtoupper(get_currency()) }} &nbsp;
+                                                                    {{ $projects['price'] }}
+                                                                </p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -172,12 +206,24 @@
                                                         </h5>
                                                     </a>
                                                     <div class="description-container">
-                                                        <a
+                                                        <a class="text-dark"
                                                             href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                                             {!! $projects['description'] !!}
                                                         </a>
                                                     </div>
-                                                    <button class="read-more-button">Read More</button>
+                                                    <div class="d-flex">
+                                                        <button class="read-more-button">Read More</button>
+                                                        <a href="{{ route('single_projects', ['id' => $projects['id']]) }}" style="color:#ffffff;" class="buy-now ms-3">Buy Now</a>
+                                                        <div class="price_cont ms-auto">
+                                                            @if ($projects['price'] > 0)
+                                                                <p>Price: &nbsp;</p>
+                                                                <p>
+                                                                    {{ strtoupper(get_currency()) }} &nbsp;
+                                                                    {{ $projects['price'] }}
+                                                                </p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -216,12 +262,24 @@
                                                         </h5>
                                                     </a>
                                                     <div class="description-container">
-                                                        <a
+                                                        <a class="text-dark"
                                                             href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                                             {!! $projects['description'] !!}
                                                         </a>
                                                     </div>
-                                                    <button class="read-more-button">Read More</button>
+                                                    <div class="d-flex">
+                                                        <button class="read-more-button">Read More</button>
+                                                        <a href="{{ route('single_projects', ['id' => $projects['id']]) }}" style="color:#ffffff;" class="buy-now ms-3">Buy Now</a>
+                                                        <div class="price_cont ms-auto">
+                                                            @if ($projects['price'] > 0)
+                                                                <p>Price: &nbsp;</p>
+                                                                <p>
+                                                                    {{ strtoupper(get_currency()) }} &nbsp;
+                                                                    {{ $projects['price'] }}
+                                                                </p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,12 +318,24 @@
                                                         </h5>
                                                     </a>
                                                     <div class="description-container">
-                                                        <a
+                                                        <a class="text-dark"
                                                             href="{{ route('single_projects', ['id' => $projects['id']]) }}">
                                                             {!! $projects['description'] !!}
                                                         </a>
                                                     </div>
-                                                    <button class="read-more-button">Read More</button>
+                                                    <div class="d-flex">
+                                                        <button class="read-more-button">Read More</button>
+                                                        <a href="{{ route('single_projects', ['id' => $projects['id']]) }}" style="color:#ffffff;" class="buy-now ms-3">Buy Now</a>
+                                                        <div class="price_cont ms-auto">
+                                                            @if ($projects['price'] > 0)
+                                                                <p>Price: &nbsp;</p>
+                                                                <p>
+                                                                    {{ strtoupper(get_currency()) }} &nbsp;
+                                                                    {{ $projects['price'] }}
+                                                                </p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -284,7 +354,6 @@
 
 
     </main>
-
     <footer>
         @include('footer')
     </footer>
@@ -314,7 +383,7 @@
                 var maxHeight = parseInt(window.getComputedStyle(container).maxHeight);
 
                 if (contentHeight > maxHeight) {
-                    var readMoreButton = container.nextElementSibling;
+                    var readMoreButton = container.nextElementSibling.querySelector('.read-more-button');
                     readMoreButton.style.display = 'block';
                 }
             });
@@ -323,7 +392,8 @@
 
             readMoreButtons.forEach(function(button) {
                 button.addEventListener('click', function() {
-                    var container = this.previousElementSibling;
+                    var container = this.closest('.card-body').querySelector(
+                        '.description-container');
                     container.classList.toggle('expanded');
                     if (container.classList.contains('expanded')) {
                         this.textContent = 'Read Less';

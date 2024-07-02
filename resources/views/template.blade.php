@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-sm-2 ">
                     <strong>Invoice No:</strong> <span
-                        style="font-size:0.7rem">{{ strlen($invoice->id) > 10 ? substr($invoice->id, 0, 10) . '***' : $invoice->id }}</span>
+                        style="font-size:0.7rem">{{ strlen($invoice->id) > 10 ? substr($invoice->id, 0, 10) . '' : $invoice->id }}</span>
                 </div>
             </div>
             <hr>
@@ -67,37 +67,41 @@
 
         <!-- Main Content -->
         <main>
-            <div class="row gy-3">
+            <div class="row d-flex justify-content-between">
+                <div class="col-sm-4"> <strong>Bill To:</strong>
+                    <address>
+                        {{ $invoice->customer_name }}<br />
+                        {{ $order->company_name }}<br />
+                        {{ $invoice->customer_email }}<br />
+                        {{ $invoice->customer_phone }}<br />
+                    </address>
+                </div>
                 <div class="col-sm-4">
                     <p class="mb-1"><strong>Order ID:</strong> OD-{{ $order->id }}</p>
                     <p class="mb-1"><strong>Order Date:</strong>
                         {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</p>
                     <p class="mb-1"><strong>Invoice Expiry:</strong> {{ ' ' . date('d/m/Y', $invoice->due_date) }}</p>
                 </div>
-                <div class="col-sm-4"> <strong>Bill To:</strong>
+                {{-- <div class="col-sm-4"> <strong>Bill To:</strong>
                     <address>
                         AirNet Technologies est.<br />
                         Dubai, United Arab Emirates.<br />
                     </address>
-                </div>
-                <div class="col-sm-4"> <strong>Invoice To:</strong>
-                    <address>
-                        {{ $invoice->customer_name }}<br />
-                        {{ $invoice->customer_email }}<br />
-                        {{ $invoice->customer_phone }}<br />
-                    </address>
-                </div>
+                </div> --}}
+                
             </div>
             <div class="table-responsive">
                 <table class="table border mb-0">
                     <thead>
                         <tr class="bg-light">
+                            <td class="col-1"><strong>Serial</strong></td>
                             <td class="col-5"><strong>Service</strong></td>
-                            <td class="col-2 text-center"><strong>Price</strong></td>
+                            <td class="col-2 text-center"><strong>Amount</strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>1</td>
                             <td class="col-5">
                                 {{ $project->title }}
                             </td>
@@ -122,26 +126,27 @@
         <!-- Footer -->
         <footer class="mt-5 footer">
             <div class="ms-2 mb-3">
-                <p class="mb-1"><strong>Account No:</strong> *****98</p>
+                {!! get_bank_transaction() !!}
+                <!-- <p class="mb-1"><strong>Account No:</strong> *****98</p>
                 <p class="mb-1"><strong>Bank:</strong> Alied Bank LTD.</p>
-                <p class="mb-1"><strong>Swift Code:</strong> sw*****98</p>
+                <p class="mb-1"><strong>Swift Code:</strong> sw*****98</p> -->
             </div>
             <div class="text-left mb-4 text-center">
-                <div class="lh-1 text-black-50 mb-3"><a href="{{ $invoice->hosted_invoice_url }}">Scan or Click to
-                        Pay</a></div>
+                <div class="lh-1 text-black-50 mb-3"><a href="{{ $invoice->hosted_invoice_url }}">Scan or Click to Pay</a></div>
                 {!! $simple !!}
             </div>
-            <div class="text-right mb-4">
-                <img id="logo" src="{{ asset('assets/fonts/sign.svg') }}" height="120" title="sign"
+            <div class="text-right ms-5 mb-4">
+               <!-- <img id="logo" src="{{ asset('assets/fonts/sign.svg') }}" height="120" title="sign"
                     alt="sign" /><br>
                 <div class="lh-1 text-black-50">Abdul Ghayoor Rana</div>
-                <div class="lh-1 text-black-50 text-0"><small>CEO</small></div>
-            </div>
+                <div class="lh-1 text-black-50 text-0"><small>CEO</small></div>-->
+            </div> 
         </footer>
         <div class="text-center">
             <div class="btn-group btn-group-sm d-print-none"> <a href="javascript:window.print()"
                     class="btn btn-light border text-black-50 shadow-none"><i class="fa fa-print"></i> Print &
                     Download</a> </div>
+          <p>This is computer generated document hence need no signature and stamp.</p>
         </div>
     </div>
 </body>

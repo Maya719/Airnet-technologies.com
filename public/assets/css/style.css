@@ -1756,4 +1756,33 @@ section {
     background-color: #F5B51B;
 
 }
+.buy-now {
+    display: none;
+
+    width: 10rem;
+
+    background-color: #d49c19d3;
+
+    border: none;
+    color: white;
+    padding: 10px 20px;
+
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+
+    cursor: pointer;
+
+    border-radius: 5px;
+
+    transition: background-color 0.3s ease;
+
+}
+
+.buy-now:hover {
+    background-color: #F5B51B;
+
+}
 

@@ -307,14 +307,16 @@
             </div>
         </section>
         <!-- End Counts Section -->
+  
+  
           <!-- ======= Portfolio Section ======= -->
                 <section id="portfolio" class="portfolio">
             <div class="container">
 
                 <div class="section-title">
-                    <span>offering</span>
+                    <span>Offering</span>
                     <h2>Services</h2>
-                    <p>Check our services</p>
+                    <p>Check our latest products</p>
                 </div>
 
                @include('portfolio', ['all_projects' => $all_projects])
@@ -329,6 +331,8 @@
                 </div>
         </section>
         <!-- End Portfolio Section -->
+  
+
         <!-- ======= Services Section ======= -->
         <section id="services" class="values">
 
@@ -339,6 +343,7 @@
                     <h2>Our Domain</h2>
                     <p>Our domain of interest</p>
                 </div>
+
 
 
                 <div class="row">
@@ -584,6 +589,31 @@
 
                     <div class="col-lg-12 d-flex align-items-stretch">
                         <div class="info">
+                          <div class="information">
+                                {{-- <div class="address">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <h4>Location:</h4>
+                                    <p>A108 Adam Street, New York, NY 535022</p>
+                                </div> --}}
+
+                                <div class="email">
+                                    <i class="bi bi-envelope"></i>
+                                    <h4>Email:</h4>
+                                    <p>
+                                        <a href="mailto:ag.rana@airnet-technologies.com">
+                                          ag.rana@airnet-technologies.com
+                                        </a>
+                                    </p>
+                                </div>
+
+                                <div class="phone">
+                                    <i class="bi bi-phone"></i>
+                                    <h4>Call:</h4>
+                                    <p>
+                                        <a href="tel:+971561283088">+971 561 283088</a>
+                                    </p>
+                                </div>
+                            </div>
                             <div class="form-container">
                                 <form action="{{ route('contact_message') }}" id="contact-form" method="post">
                                     @csrf
